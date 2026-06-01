@@ -536,9 +536,9 @@ function goToDone() {
     document.getElementById('s-concern').textContent = D.concern;
 
     const msg = encodeURIComponent(
-      'Hello JeevanKey, I completed my alignment questionnaire.\\n\\n' +
-      'Name: ' + D.name + '\\n' +
-      'Focus Track: ' + D.concern + '\\n\\n' +
+      'Hello JeevanKey, I completed my alignment questionnaire.\n\n' +
+      'Name: ' + D.name + '\n' +
+      'Focus Track: ' + D.concern + '\n\n' +
       'Please match me with my dedicated coordinator.'
     );
     document.getElementById('done-wa-btn').href = 'https://wa.me/919259684363?text=' + msg;
