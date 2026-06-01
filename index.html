@@ -583,7 +583,7 @@ function onName(el) {
 }
 
 function onPhone(el) {
-  el.value = el.value.replace(/\\D/g, '').slice(0, 10);
+  el.value = el.value.replace(/\D/g, '').slice(0, 10);
   const v = el.value;
   D.phone = v;
   const btn = document.getElementById('btn-2');
