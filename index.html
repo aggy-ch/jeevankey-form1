@@ -484,9 +484,19 @@ body {
 
 <script>
 /* ── LOCALIZED FUNNEL ARCHITECTURE ── */
-const D = { name: '', phone: '', concern: '' };
+/* Change this line */
+const D = { name: '', phone: '', concern: '', intent: '' }; // Added intent here
 let currentStep = 1;
 const TOTAL = 3;
+
+// Automatically extract the clicked pricing tier from your main site's link parameters
+window.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const planIntent = urlParams.get('intent');
+  if (planIntent) {
+    D.intent = planIntent.trim().toLowerCase(); // Stores: 'trial', 'essential', etc.
+  }
+});
 
 function setProgress(step) {
   const pct = Math.round(((step - 1) / TOTAL) * 100);
@@ -535,14 +545,18 @@ function goToDone() {
     document.getElementById('s-phone').textContent = '+91 ' + D.phone;
     document.getElementById('s-concern').textContent = D.concern;
 
+    /* Look inside your goToDone() function and update the message block */
+    const planLabel = D.intent ? D.intent.toUpperCase() : 'Not Specified';
+
     const msg = encodeURIComponent(
-      'Hello JeevanKey, I completed my alignment questionnaire.\n\n' +
+      'Hello JeevanKey, I completed my onboarding questionnaire.\n\n' +
       'Name: ' + D.name + '\n' +
-      'Focus Track: ' + D.concern + '\n\n' +
+      'WhatsApp: +91 ' + D.phone + '\n' +
+      'Focus Track: ' + D.concern + '\n' +
+      'Selected Plan: ' + planLabel + '\n\n' + // <-- Injects plan into the chat automatically!
       'Please match me with my dedicated coordinator.'
     );
     document.getElementById('done-wa-btn').href = 'https://wa.me/919259684363?text=' + msg;
-
     /* Securely fire payload background relay to Google Apps Script */
     sendToSheet();
   }, 250);
@@ -554,10 +568,12 @@ function sendToSheet() {
   if (SHEET_URL.includes('YOUR_GOOGLE_APPS_SCRIPT_URL_HERE')) return;
   
   // Package structural data variables securely
+  /* Update your payload parameters inside sendToSheet() */
   const payload = {
     name:    D.name,
-    phone:   "'+91 '" + D.phone,
+    phone:   "'+91 " + D.phone,
     concern: D.concern,
+    intent:  D.intent || 'None (Direct Visit)', // <-- Sends the plan selection to Google Scripts
     ts:      new Date().toISOString()
   };
   
