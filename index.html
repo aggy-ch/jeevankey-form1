@@ -568,7 +568,8 @@ function sendToSheet() {
   if (SHEET_URL.includes('YOUR_GOOGLE_APPS_SCRIPT_URL_HERE')) return; 
   
   const urlParams = new URLSearchParams(window.location.search);
-  const detectedIntent = urlParams.get('intent') || 'None (Direct Visit)';
+  // Checks the URL parameter first; if empty, checks our global memory object next!
+  const detectedIntent = urlParams.get('intent') || D.intent || 'None (Direct Visit)';
 
   const payload = {
     name:    D.name,
