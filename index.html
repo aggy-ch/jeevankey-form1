@@ -568,14 +568,26 @@ function sendToSheet() {
   if (SHEET_URL.includes('YOUR_GOOGLE_APPS_SCRIPT_URL_HERE')) return;
   
   // Package structural data variables securely
-  /* Update your payload parameters inside sendToSheet() */
+  // 1. Force the script to look directly at the browser address bar right now
+  const urlParams = new URLSearchParams(window.location.search);
+  const detectedIntent = urlParams.get('intent') || 'None (Direct Visit)';
+
   const payload = {
     name:    D.name,
     phone:   "'+91 " + D.phone,
     concern: D.concern,
-    intent:  D.intent || 'None (Direct Visit)', // <-- Sends the plan selection to Google Scripts
+    intent:  detectedIntent, // 2. Transmit the fresh parameter directly
     ts:      new Date().toISOString()
   };
+  
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .catch(() => {});
+};
   
   // Transmit payload using standard cross-origin JSON configurations
   fetch(SHEET_URL, {
