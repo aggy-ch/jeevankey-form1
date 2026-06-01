@@ -565,10 +565,8 @@ function goToDone() {
 /* ── GOOGLE SHEETS RELAY AGENT ── */
 function sendToSheet() {
   const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec'; 
-  if (SHEET_URL.includes('YOUR_GOOGLE_APPS_SCRIPT_URL_HERE')) return;
+  if (SHEET_URL.includes('YOUR_GOOGLE_APPS_SCRIPT_URL_HERE')) return; 
   
-  // Package structural data variables securely
-  // 1. Force the script to look directly at the browser address bar right now
   const urlParams = new URLSearchParams(window.location.search);
   const detectedIntent = urlParams.get('intent') || 'None (Direct Visit)';
 
@@ -576,7 +574,7 @@ function sendToSheet() {
     name:    D.name,
     phone:   "'+91 " + D.phone,
     concern: D.concern,
-    intent:  detectedIntent, // 2. Transmit the fresh parameter directly
+    intent:  detectedIntent,
     ts:      new Date().toISOString()
   };
   
@@ -588,19 +586,7 @@ function sendToSheet() {
   })
   .catch(() => {});
 }
-  
-  // Transmit payload using standard cross-origin JSON configurations
-  fetch(SHEET_URL, {
-    method: 'POST',
-    mode: 'no-cors', // Bypasses browser CORS blocks seamlessly
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(payload)
-  })
-  .then(() => console.log("Payload routed out successfully!"))
-  .catch(err => console.error("Pipeline failure:", err));
-}
+
 function onName(el) {
   const v = el.value.trim();
   D.name = v;
