@@ -569,7 +569,7 @@ function sendToSheet() {
   
   const urlParams = new URLSearchParams(window.location.search);
   // Checks the URL parameter first; if empty, checks our global memory object next!
-  const detectedIntent = urlParams.get('intent') || D.intent || 'None (Direct Visit)';
+  const detectedIntent = urlParams.get('intent') || D.intent || 'Missing on Frontend';
 
   const payload = {
     name:    D.name,
