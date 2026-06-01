@@ -550,21 +550,29 @@ function goToDone() {
 
 /* ── GOOGLE SHEETS RELAY AGENT ── */
 function sendToSheet() {
-  // REPLACE THE VALUE BELOW WITH YOUR ACTUAL DEPLOYED WEB APP GOOGLE URL ENVELOPE (ENDING IN /exec)
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec';
-  if (SHEET_URL === 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec') return; 
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec'; 
+  if (SHEET_URL.includes('YOUR_GOOGLE_APPS_SCRIPT_URL_HERE')) return;
   
-  const body = new URLSearchParams({
+  // Package structural data variables securely
+  const payload = {
     name:    D.name,
-    phone:   '+91' + D.phone,
+    phone:   '+91 ' + D.phone,
     concern: D.concern,
     ts:      new Date().toISOString()
-  });
+  };
   
-  fetch(SHEET_URL, { method: 'POST', body })
-    .catch(() => {}); // Resilient silent fail for seamless user optimization
+  // Transmit payload using standard cross-origin JSON configurations
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors', // Bypasses browser CORS blocks seamlessly
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(() => console.log("Payload routed out successfully!"))
+  .catch(err => console.error("Pipeline failure:", err));
 }
-
 function onName(el) {
   const v = el.value.trim();
   D.name = v;
