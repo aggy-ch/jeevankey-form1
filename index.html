@@ -314,6 +314,35 @@ body {
   line-height: 1.6;
   margin-bottom: 24px;
 }
+/* ── GOOGLE SHEETS RELAY AGENT ── */
+
+function sendToSheet() {
+
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec';
+
+  if (SHEET_URL === 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec') return; // Intercept if unconfigured
+
+  
+
+  const body = new URLSearchParams({
+
+    name:    D.name,
+
+    phone:   '+91' + D.phone,
+
+    concern: D.concern,
+
+    ts:      new Date().toISOString()
+
+  });
+
+  
+
+  fetch(SHEET_URL, { method: 'POST', body })
+
+    .catch(() => {}); // Resilient silent fail for seamless user optimization
+
+}
 .done-wa {
   display: inline-flex;
   align-items: center;
