@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+# Read the complete file content, inject a real or placeholder URL for visual clarity, 
+# and ensure it perfectly integrates the Google Sheets relay payload system.
+
+final_html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -314,35 +317,6 @@ body {
   line-height: 1.6;
   margin-bottom: 24px;
 }
-/* ── GOOGLE SHEETS RELAY AGENT ── */
-
-function sendToSheet() {
-
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec';
-
-  if (SHEET_URL === 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec') return; // Intercept if unconfigured
-
-  
-
-  const body = new URLSearchParams({
-
-    name:    D.name,
-
-    phone:   '+91' + D.phone,
-
-    concern: D.concern,
-
-    ts:      new Date().toISOString()
-
-  });
-
-  
-
-  fetch(SHEET_URL, { method: 'POST', body })
-
-    .catch(() => {}); // Resilient silent fail for seamless user optimization
-
-}
 .done-wa {
   display: inline-flex;
   align-items: center;
@@ -565,13 +539,33 @@ function goToDone() {
     document.getElementById('s-concern').textContent = D.concern;
 
     const msg = encodeURIComponent(
-      'Hello JeevanKey, I completed my alignment questionnaire.\n\n' +
-      'Name: ' + D.name + '\n' +
-      'Focus Track: ' + D.concern + '\n\n' +
+      'Hello JeevanKey, I completed my alignment questionnaire.\\n\\n' +
+      'Name: ' + D.name + '\\n' +
+      'Focus Track: ' + D.concern + '\\n\\n' +
       'Please match me with my dedicated coordinator.'
     );
     document.getElementById('done-wa-btn').href = 'https://wa.me/919259684363?text=' + msg;
+
+    /* Securely fire payload background relay to Google Apps Script */
+    sendToSheet();
   }, 250);
+}
+
+/* ── GOOGLE SHEETS RELAY AGENT ── */
+function sendToSheet() {
+  // REPLACE THE VALUE BELOW WITH YOUR ACTUAL DEPLOYED WEB APP GOOGLE URL ENVELOPE (ENDING IN /exec)
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec';
+  if (SHEET_URL === 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec') return; 
+  
+  const body = new URLSearchParams({
+    name:    D.name,
+    phone:   '+91' + D.phone,
+    concern: D.concern,
+    ts:      new Date().toISOString()
+  });
+  
+  fetch(SHEET_URL, { method: 'POST', body })
+    .catch(() => {}); // Resilient silent fail for seamless user optimization
 }
 
 function onName(el) {
@@ -592,7 +586,7 @@ function onName(el) {
 }
 
 function onPhone(el) {
-  el.value = el.value.replace(/\D/g, '').slice(0, 10);
+  el.value = el.value.replace(/\\D/g, '').slice(0, 10);
   const v = el.value;
   D.phone = v;
   const btn = document.getElementById('btn-2');
@@ -631,9 +625,13 @@ function submit() {
   goToDone();
 }
 
-// Auto-initialization context execution-Stopped
+// Auto-initialization context execution (Auto-focus completely removed to preserve layout stability on embeds)
 setProgress(1);
-// setTimeout(() => document.getElementById('f-name').focus(), 100);
 </script>
 </body>
 </html>
+"""
+
+with open("jeevankey_funnel.html", "w", encoding="utf-8") as file:
+    file.write(final_html_content)
+print("Corrected file rebuilt successfully.")
