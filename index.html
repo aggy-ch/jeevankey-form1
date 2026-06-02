@@ -561,12 +561,12 @@ function goToDone() {
     const planLabel = D.intent ? D.intent.toUpperCase() : 'Not Specified';
 
     const msg = encodeURIComponent(
-      'Hello JeevanKey, I completed my onboarding questionnaire.\n\n' +
+      'Hello JeevanKey, I completed my onboarding. I accept the terms of service.\n\n' +
       'Name: ' + D.name + '\n' +
       'WhatsApp: +91 ' + D.phone + '\n' +
       'Focus Track: ' + D.concern + '\n' +
       'Selected Plan: ' + planLabel + '\n\n' + 
-      'Please match me with my dedicated coordinator.'
+      'Please match me with my dedicated coordinator and care team.'
     );
     document.getElementById('done-wa-btn').href = 'https://wa.me/919259684363?text=' + msg;
     sendToSheet();
