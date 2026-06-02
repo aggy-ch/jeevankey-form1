@@ -294,6 +294,15 @@ body {
 .val-msg.show { display: block; }
 .val-msg.err { color: #d32f2f; }
 
+/* ── Mandatory Micro-Notice for DPDP Compliance ── */
+.notice-text {
+  font-size: 11px;
+  color: var(--ink-4);
+  line-height: 1.4;
+  text-align: center;
+  margin-top: 14px;
+}
+
 /* ── Final Outcome Screen ── */
 #step-done {
   text-align: center;
@@ -452,9 +461,15 @@ body {
           <span class="opt-icon">📋</span><span>Managing a long-term condition</span>
         </button>
       </div>
+      
       <button class="next-btn" id="btn-3" onclick="submit()">
         Connect My Care Team <span class="next-arrow">→</span>
       </button>
+      
+      <!-- Notice-based Explicit Consent Node for DPDP Compliance -->
+      <p class="notice-text">
+        By clicking above, you agree to our Terms and authorize JeevanKey to process your concern profile and contact you via WhatsApp/SMS for health coordination and updates.
+      </p>
     </div>
 
     <!-- Step 4: Secure Data Summary & Submission -->
@@ -484,17 +499,15 @@ body {
 
 <script>
 /* ── LOCALIZED FUNNEL ARCHITECTURE ── */
-/* Change this line */
-const D = { name: '', phone: '', concern: '', intent: '' }; // Added intent here
+const D = { name: '', phone: '', concern: '', intent: '' }; 
 let currentStep = 1;
 const TOTAL = 3;
 
-// Automatically extract the clicked pricing tier from your main site's link parameters
 window.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   const planIntent = urlParams.get('intent');
   if (planIntent) {
-    D.intent = planIntent.trim().toLowerCase(); // Stores: 'trial', 'essential', etc.
+    D.intent = planIntent.trim().toLowerCase(); 
   }
 });
 
@@ -533,7 +546,6 @@ function goToDone() {
   setTimeout(() => {
     if (leaving) leaving.classList.remove('active', 'leaving');
     
-    // Smooth layout adjust to match Carrd's transformation metrics
     document.getElementById('intro-desc').style.display = 'none';
     document.getElementById('progress-container').style.display = 'none';
     
@@ -545,7 +557,6 @@ function goToDone() {
     document.getElementById('s-phone').textContent = '+91 ' + D.phone;
     document.getElementById('s-concern').textContent = D.concern;
 
-    /* Look inside your goToDone() function and update the message block */
     const planLabel = D.intent ? D.intent.toUpperCase() : 'Not Specified';
 
     const msg = encodeURIComponent(
@@ -553,11 +564,10 @@ function goToDone() {
       'Name: ' + D.name + '\n' +
       'WhatsApp: +91 ' + D.phone + '\n' +
       'Focus Track: ' + D.concern + '\n' +
-      'Selected Plan: ' + planLabel + '\n\n' + // <-- Injects plan into the chat automatically!
+      'Selected Plan: ' + planLabel + '\n\n' + 
       'Please match me with my dedicated coordinator.'
     );
     document.getElementById('done-wa-btn').href = 'https://wa.me/919259684363?text=' + msg;
-    /* Securely fire payload background relay to Google Apps Script */
     sendToSheet();
   }, 250);
 }
@@ -568,7 +578,6 @@ function sendToSheet() {
   if (SHEET_URL.includes('YOUR_GOOGLE_APPS_SCRIPT_URL_HERE')) return; 
   
   const urlParams = new URLSearchParams(window.location.search);
-  // Checks the URL parameter first; if empty, checks our global memory object next!
   const detectedIntent = urlParams.get('intent') || D.intent || 'Missing on Frontend';
 
   const payload = {
@@ -645,7 +654,6 @@ function submit() {
   goToDone();
 }
 
-// Auto-initialization context execution (Auto-focus completely removed to preserve layout stability on embeds)
 setProgress(1);
 </script>
 </body>
