@@ -654,7 +654,17 @@ function submit() {
   if (!D.concern) return;
   goToDone();
 }
-
+// Automatically broadcast the current screen size to the parent Carrd frame
+const resizeObserver = new ResizeObserver(entries => {
+  for (let entry of entries) {
+    window.parent.postMessage({
+      type: 'resize',
+      height: entry.contentRect.height
+    }, '*');
+  }
+});
+// Attach listener directly to the wrapper card
+resizeObserver.observe(document.querySelector('.wrap'));
 setProgress(1);
 </script>
 </body>
