@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JeevanKey — Apni Care Team Banayein</title>
+<!-- Google tag (gtag.js) — JeevanKey GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JQG3B09294"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-JQG3B09294', { send_page_view: true });
+</script>
 <style>
 :root {
   --navy:    #0C447C;
@@ -367,7 +375,7 @@ body {
         <span class="summary-val" id="s-paradigm"></span>
       </div>
     </div>
-    <a class="done-wa" id="done-wa-btn" href="#" target="_blank">
+    <a class="done-wa" id="done-wa-btn" href="#" target="_blank" onclick="onWaClick()">
       💬 <span id="wa-btn-label"></span>
     </a>
     <p class="disclaimer" id="disclaimer-text"></p>
@@ -851,7 +859,7 @@ function submit() {
   if (from) from.classList.remove('active');
   document.getElementById('step-done').classList.add('active');
 
-  // Google Sheets relay
+  // Google Sheets relay + GA4 lead event
   sendToSheet();
 }
 
@@ -861,11 +869,12 @@ function submit() {
 function sendToSheet() {
   const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec';
   const urlParams = new URLSearchParams(window.location.search);
+  const intentVal = urlParams.get('intent') || D.paradigm;
   const payload = {
     name:    D.name,
     phone:   "'+91 " + D.phone,
     concern: D.paradigmLabel,
-    intent:  urlParams.get('intent') || D.paradigm,
+    intent:  intentVal,
     ts:      new Date().toISOString()
   };
   fetch(SHEET_URL, {
@@ -873,7 +882,53 @@ function sendToSheet() {
     mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
-  }).catch(() => {});
+  })
+  .then(() => {
+    // Fire GA4 event on successful sheet write
+    // Secondary event — observational only, not the primary conversion
+    if (typeof gtag === 'function') {
+      gtag('event', 'jk_onboarding_complete', {
+        paradigm:       D.paradigm,
+        paradigm_label: D.paradigmLabel,
+        lang:           lang,
+        intent:         intentVal,
+        event_category: 'onboarding_funnel',
+        event_label:    'sheet_write_success'
+      });
+    }
+  })
+  .catch(() => {
+    // Still fire event even if sheet write fails — lead captured via WA message
+    if (typeof gtag === 'function') {
+      gtag('event', 'jk_onboarding_complete', {
+        paradigm:       D.paradigm,
+        paradigm_label: D.paradigmLabel,
+        lang:           lang,
+        intent:         intentVal,
+        event_category: 'onboarding_funnel',
+        event_label:    'sheet_write_failed'
+      });
+    }
+  });
+}
+
+/* ══════════════════════════════════════════════════
+   WHATSAPP CLICK — PRIMARY CONVERSION EVENT
+   Mark jk_onboarding_whatsapp_initiated as a
+   Conversion in GA4 and primary Google Ads conversion.
+   ══════════════════════════════════════════════════ */
+function onWaClick() {
+  if (typeof gtag === 'function') {
+    gtag('event', 'jk_onboarding_whatsapp_initiated', {
+      paradigm:       D.paradigm,
+      paradigm_label: D.paradigmLabel,
+      lang:           lang,
+      intent:         new URLSearchParams(window.location.search).get('intent') || D.paradigm,
+      event_category: 'conversion',
+      event_label:    'onboarding_whatsapp_cta'
+    });
+  }
+  // Navigation handled by the href on the <a> tag
 }
 
 /* ══════════════════════════════════════════════════
