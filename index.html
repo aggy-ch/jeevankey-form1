@@ -1,36 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JeevanKey — Tell us about yourself</title>
+<title>JeevanKey — Apni Care Team Banayein</title>
 <style>
 :root {
-  --navy:     #0C447C;
-  --navy-d:   #06233f;
-  --navy-l:   #12579b;
-  --navy-xl:  --off;
-  --green:    #3B6D11;
-  --green-d:  #24440a;
-  --green-l:  #539719;
-  --white:    #ffffff;
-  --off:      #8EDBF5;
-  --ink:      #111b24;
-  --ink-2:    #2c3a46;
-  --ink-3:    #526371;
-  --ink-4:    #8ea1b0;
-  --wa:       #25D366;
-  --wa-d:     #1aab53;
-  --success:  #2e7d32;
-  --sans:     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --ease:     cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in:  cubic-bezier(0.4, 0, 1, 1);
+  --navy:    #0C447C;
+  --navy-d:  #06233f;
+  --navy-l:  #12579b;
+  --green:   #3B6D11;
+  --green-d: #24440a;
+  --green-l: #539719;
+  --white:   #ffffff;
+  --off:     #8EDBF5;
+  --ink:     #111b24;
+  --ink-2:   #2c3a46;
+  --ink-3:   #526371;
+  --ink-4:   #8ea1b0;
+  --wa:      #25D366;
+  --wa-d:    #1aab53;
+  --sans:    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --ease:    cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body { height: 100%; overflow: visible; }
-
+html, body { height: 100%; }
 body {
   font-family: var(--sans);
   background: var(--off);
@@ -41,191 +35,129 @@ body {
   align-items: center;
   justify-content: center;
   padding: 20px;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Container matching Carrd's responsive structure layout metrics */
 .wrap {
   width: 100%;
   max-width: 480px;
   background: var(--white);
   border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(12, 68, 124, 0.06);
-  padding: 40px 32px;
-  position: relative;
-  z-index: 1;
+  box-shadow: 0 10px 40px rgba(12,68,124,0.08);
+  padding: 36px 28px 28px;
 }
 
-/* ── Brand Bar ── */
+/* ── Brand bar ── */
 .brand {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.brand-left {
+  display: flex;
+  align-items: center;
   gap: 8px;
-  margin-bottom: 32px;
 }
 .brand-logo {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 19px;
+  font-weight: 800;
   color: var(--navy);
   letter-spacing: -.02em;
 }
-.brand-logo span {
-  color: var(--green);
-}
-.brand-dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--ink-4);
-}
-.brand-tag {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--ink-3);
-  letter-spacing: .02em;
-}
+.brand-logo span { color: var(--green); }
+.brand-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--ink-4); }
+.brand-tag { font-size: 11.5px; font-weight: 500; color: var(--ink-3); }
 
-/* ── Intro ── */
-.intro {
-  text-align: center;
-  margin-bottom: 32px;
-}
-.intro-h {
-  font-size: 28px;
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -.02em;
-  margin-bottom: 12px;
-  background: linear-gradient(270deg, var(--green) 45%, var(--navy) 63%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-fill-color: transparent;
-}
-.intro-p {
-  font-size: 14.5px;
-  color: var(--ink-3);
-  line-height: 1.6;
+/* ── Language selector ── */
+.lang-select {
+  font-size: 12px;
+  color: var(--ink-2);
+  border: 1.5px solid #d2dbe1;
+  border-radius: 6px;
+  padding: 5px 8px;
+  background: var(--white);
+  cursor: pointer;
+  font-family: var(--sans);
 }
 
 /* ── Progress ── */
-.progress-container {
-  margin-bottom: 32px;
-}
-.progress-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--ink-3);
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  margin-bottom: 8px;
+.progress-wrap { margin-bottom: 24px; }
+.progress-meta {
   display: flex;
   justify-content: space-between;
+  font-size: 11px;
+  color: var(--ink-4);
+  margin-bottom: 6px;
 }
-.progress-bar {
-  height: 4px;
-  background: #e1e8ed;
-  border-radius: 4px;
-  overflow: hidden;
-}
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--navy), var(--green));
-  border-radius: 4px;
-  transition: width .5s var(--ease);
-}
+.progress-bar { height: 3px; background: #edf2f5; border-radius: 2px; }
+.progress-fill { height: 100%; background: var(--green); border-radius: 2px; transition: width .4s var(--ease); }
 
-/* ── Steps Container ── */
-.steps { position: relative; }
+/* ── Steps ── */
+.step { display: none; }
+.step.active { display: block; animation: fadeUp .3s var(--ease); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-/* ── Individual Step ── */
-.step {
-  display: none;
-  animation: stepIn .4s var(--ease) both;
-}
-.step.active { display: block; }
-.step.leaving {
-  display: block;
-  animation: stepOut .25s var(--ease-in) both;
-  pointer-events: none;
-}
-
-@keyframes stepIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: none; }
-}
-@keyframes stepOut {
-  from { opacity: 1; transform: none; }
-  to   { opacity: 0; transform: translateY(-8px); }
-}
-
-/* ── Step Question ── */
 .step-q {
   font-size: 19px;
   font-weight: 700;
+  color: var(--navy);
   line-height: 1.3;
-  color: var(--ink);
   margin-bottom: 6px;
 }
 .step-hint {
-  font-size: 13.5px;
+  font-size: 13px;
   color: var(--ink-3);
   margin-bottom: 20px;
+  line-height: 1.5;
 }
+.hi-name { color: var(--green); font-weight: 700; }
 
-/* ── Form Inputs ── */
-.field-wrap { position: relative; margin-bottom: 12px; }
-
+/* ── Text input ── */
+.field-wrap { margin-bottom: 4px; }
 .field-input {
   width: 100%;
-  padding: 14px 16px;
+  padding: 13px 14px;
+  font-size: 15px;
   font-family: var(--sans);
-  font-size: 16px;
-  font-weight: 400;
-  color: var(--ink);
-  background: var(--white);
   border: 1.5px solid #d2dbe1;
   border-radius: 8px;
+  color: var(--ink);
+  background: var(--white);
+  transition: border-color .2s;
   outline: none;
-  transition: border-color .2s, box-shadow .2s;
-  -webkit-appearance: none;
 }
-.field-input::placeholder { color: var(--ink-4); }
-.field-input:focus {
-  border-color: var(--navy);
-  box-shadow: 0 0 0 4px rgba(12, 68, 124, 0.08);
-}
-.field-input.valid {
-  border-color: var(--green);
-}
+.field-input:focus { border-color: var(--navy); }
+.field-input.valid { border-color: var(--green); }
 
-/* Phone Field Specifics */
+/* ── Phone wrap ── */
 .phone-wrap { display: flex; }
 .phone-code {
-  padding: 14px 14px;
+  padding: 13px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
   background: #edf2f5;
   border: 1.5px solid #d2dbe1;
   border-right: none;
   border-radius: 8px 0 0 8px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--ink-2);
   display: flex;
   align-items: center;
   gap: 4px;
+  white-space: nowrap;
 }
-.phone-input {
-  border-radius: 0 8px 8px 0 !important;
-}
+.field-input.phone-input { border-radius: 0 8px 8px 0; }
 
-/* ── Conversational Vertical Custom Buttons ── */
-.opts { display: flex; flex-direction: column; gap: 8px; }
+/* ── Validation message ── */
+.val-msg { font-size: 12px; color: var(--green); margin-top: 6px; display: none; }
+.val-msg.show { display: block; }
+.val-msg.err { color: #d32f2f; }
 
+/* ── Options (Q0 paradigm) ── */
+.opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
 .opt {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   padding: 14px 16px;
   background: var(--white);
@@ -233,31 +165,27 @@ body {
   border-radius: 8px;
   cursor: pointer;
   font-family: var(--sans);
-  font-size: 14.5px;
-  font-weight: 500;
-  color: var(--ink-2);
-  line-height: 1.4;
-  transition: all .2s var(--ease);
   text-align: left;
   width: 100%;
+  transition: all .2s var(--ease);
 }
-.opt:hover {
-  border-color: var(--green-l);
-  background: #fbfdfa;
-  color: var(--green-d);
-}
-.opt.sel {
-  border-color: var(--green);
-  background: #f4faf0;
-  color: var(--green-d);
-  font-weight: 600;
-}
-.opt-icon {
-  font-size: 16px;
-  flex-shrink: 0;
+.opt:hover { border-color: var(--green-l); background: #fbfdfa; }
+.opt.sel { border-color: var(--green); background: #f4faf0; }
+.opt-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+.opt-body { display: flex; flex-direction: column; gap: 3px; }
+.opt-main { font-size: 14.5px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+.opt.sel .opt-main { color: var(--green-d); }
+.opt-sub { font-size: 12px; color: var(--ink-4); line-height: 1.4; }
+
+/* ── Consent notice ── */
+.consent-note {
+  font-size: 11px;
+  color: var(--ink-4);
+  line-height: 1.5;
+  margin-top: 12px;
 }
 
-/* ── Interactive Navigation Button ── */
+/* ── Next button ── */
 .next-btn {
   display: flex;
   align-items: center;
@@ -280,51 +208,38 @@ body {
 }
 .next-btn.on { opacity: 1; pointer-events: all; }
 .next-btn:hover { background: var(--navy-l); }
-.next-btn:active { background: var(--navy-d); }
-.next-arrow { font-style: normal; transition: transform .2s; }
+.next-arrow { transition: transform .2s; }
 .next-btn:hover .next-arrow { transform: translateX(3px); }
 
-/* ── Validation Message UI ── */
-.val-msg {
-  font-size: 12px;
-  color: var(--green);
-  margin-top: 6px;
-  display: none;
-}
-.val-msg.show { display: block; }
-.val-msg.err { color: #d32f2f; }
+/* ── Summary (done screen) ── */
+#step-done { text-align: center; }
+.done-icon { font-size: 42px; margin-bottom: 14px; }
+.done-h { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+.done-sub { font-size: 13.5px; color: var(--ink-3); line-height: 1.6; margin-bottom: 20px; }
 
-/* ── Mandatory Micro-Notice for DPDP Compliance ── */
-.notice-text {
-  font-size: 11px;
-  color: var(--ink-4);
-  line-height: 1.4;
-  text-align: center;
-  margin-top: 14px;
+.summary {
+  background: #f8fafc;
+  border: 1.5px solid #edf2f5;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  text-align: left;
 }
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 7px 0;
+  font-size: 13.5px;
+  border-bottom: 1px solid #edf2f5;
+  gap: 12px;
+}
+.summary-row:last-child { border-bottom: none; }
+.summary-key { color: var(--ink-3); flex-shrink: 0; }
+.summary-val { color: var(--ink); font-weight: 600; text-align: right; }
 
-/* ── Final Outcome Screen ── */
-#step-done {
-  text-align: center;
-}
-.done-icon {
-  font-size: 40px;
-  margin-bottom: 16px;
-}
-.done-h {
-  font-size: 24px;
-  font-weight: 800;
-  color: var(--navy);
-  margin-bottom: 8px;
-}
-.done-sub {
-  font-size: 14.5px;
-  color: var(--ink-3);
-  line-height: 1.6;
-  margin-bottom: 24px;
-}
 .done-wa {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
@@ -340,263 +255,495 @@ body {
 }
 .done-wa:hover { background: var(--wa-d); }
 
-/* Summary Grid Breakdown */
-.summary {
-  background: #f8fafc;
-  border: 1.5px solid #edf2f5;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 20px 0;
-  text-align: left;
-}
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 0;
-  font-size: 13.5px;
-  border-bottom: 1px solid #edf2f5;
-}
-.summary-row:last-child { border-bottom: none; }
-.summary-key { color: var(--ink-3); }
-.summary-val { color: var(--ink); font-weight: 600; }
-
 .disclaimer {
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--ink-4);
   line-height: 1.5;
-  margin-top: 24px;
+  margin-top: 18px;
 }
 
-.greeting-name {
-  color: var(--green);
+@media (max-width: 480px) {
+  .wrap { padding: 24px 18px 20px; border-radius: 0; min-height: 100vh; }
+  .step-q { font-size: 17px; }
 }
 </style>
 </head>
 <body>
-
 <div class="wrap">
 
-  <!-- Brand System Bar -->
+  <!-- Brand bar -->
   <div class="brand">
-    <div class="brand-logo">Jeevan<span>Key</span></div>
-    <div class="brand-dot"></div>
-    <div class="brand-tag">Onboarding</div>
+    <div class="brand-left">
+      <div class="brand-logo">Jeevan<span>Key</span></div>
+      <div class="brand-dot"></div>
+      <div class="brand-tag" id="brand-tag">Onboarding</div>
+    </div>
+    <select class="lang-select" id="lang-select" onchange="setLang(this.value)">
+      <option value="hi">हिंदी</option>
+      <option value="en">English</option>
+      <option value="gu">ગુજરાતી</option>
+      <option value="mr">मराठी</option>
+      <option value="bn">বাংলা</option>
+      <option value="ta">தமிழ்</option>
+      <option value="te">తెలుగు</option>
+      <option value="kn">ಕನ್ನಡ</option>
+      <option value="ml">മലയാളം</option>
+    </select>
   </div>
 
-  <!-- Dynamic Heading Stack -->
-  <div class="intro">
-    <h1 class="intro-h">Let's build your team</h1>
-    <p class="intro-p" id="intro-desc">Help us understand your standard requirements to assign the exact care team for your needs.</p>
+  <!-- Progress -->
+  <div class="progress-wrap" id="progress-wrap">
+    <div class="progress-meta">
+      <span id="prog-text"></span>
+      <span id="prog-pct"></span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
   </div>
 
-  <!-- Progress System Indicator -->
-  <div class="progress-container" id="progress-container">
-    <div class="progress-label">
-      <span id="prog-text">Step 1 of 3</span>
-      <span id="prog-pct">0%</span>
+  <!-- ══ STEP 1: Name ══ -->
+  <div class="step active" id="step-1">
+    <p class="step-q" id="q-name"></p>
+    <p class="step-hint" id="h-name"></p>
+    <div class="field-wrap">
+      <input class="field-input" type="text" id="f-name"
+        autocomplete="given-name" autocapitalize="words" maxlength="40"
+        oninput="onName(this)"
+        onkeydown="if(event.key==='Enter'&&this.value.trim().length>=2) goTo(2)">
+      <div class="val-msg" id="val-name"></div>
     </div>
-    <div class="progress-bar">
-      <div class="progress-fill" id="progress" style="width: 0%"></div>
-    </div>
+    <button class="next-btn" id="btn-1" onclick="goTo(2)">
+      <span id="btn1-label"></span> <span class="next-arrow">→</span>
+    </button>
   </div>
 
-  <!-- ══ CONVERSATIONAL PIPELINE ══ -->
-  <div class="steps" id="steps">
-
-    <!-- Step 1: Core Name Validation -->
-    <div class="step active" id="step-1">
-      <p class="step-q">What should we call you?</p>
-      <p class="step-hint">Your preferred first name or nickname works perfectly.</p>
-      <div class="field-wrap">
-        <input class="field-input" type="text" id="f-name" placeholder="Enter your name"
-          autocomplete="given-name" autocapitalize="words" maxlength="40"
-          oninput="onName(this)" onkeydown="if(event.key==='Enter'&&this.value.trim().length>=2) nextStep(2)">
-        <div class="val-msg" id="val-name"></div>
+  <!-- ══ STEP 2: Phone ══ -->
+  <div class="step" id="step-2">
+    <p class="step-q" id="q-phone"></p>
+    <p class="step-hint" id="h-phone"></p>
+    <div class="field-wrap">
+      <div class="phone-wrap">
+        <div class="phone-code">🇮🇳 +91</div>
+        <input class="field-input phone-input" type="tel" id="f-phone"
+          maxlength="10" inputmode="numeric" pattern="[0-9]*"
+          oninput="onPhone(this)"
+          onkeydown="if(event.key==='Enter') tryPhone()">
       </div>
-      <button class="next-btn" id="btn-1" onclick="nextStep(2)">
-        Continue <span class="next-arrow">→</span>
-      </button>
+      <div class="val-msg" id="val-phone"></div>
     </div>
+    <button class="next-btn" id="btn-2" onclick="goTo(3)">
+      <span id="btn2-label"></span> <span class="next-arrow">→</span>
+    </button>
+  </div>
 
-    <!-- Step 2: Regional Phone Mapping -->
-    <div class="step" id="step-2">
-      <p class="step-q">Hello <span class="greeting-name" id="g2"></span>, what is your WhatsApp number?</p>
-      <p class="step-hint">Your dedicated care director will message you directly here.</p>
-      <div class="field-wrap">
-        <div class="phone-wrap">
-          <div class="phone-code">🇮🇳 +91</div>
-          <input class="field-input phone-input" type="tel" id="f-phone"
-            placeholder="98765 43210" maxlength="10"
-            inputmode="numeric" pattern="[0-9]*"
-            oninput="onPhone(this)" onkeydown="if(event.key==='Enter') tryPhone()">
-        </div>
-        <div class="val-msg" id="val-phone"></div>
-      </div>
-      <button class="next-btn" id="btn-2" onclick="nextStep(3)">
-        Continue <span class="next-arrow">→</span>
-      </button>
+  <!-- ══ STEP 3: Paradigm (Q0) ══ -->
+  <div class="step" id="step-3">
+    <p class="step-q" id="q-paradigm"></p>
+    <p class="step-hint" id="h-paradigm"></p>
+    <div class="opts" id="paradigm-opts">
+      <!-- options injected by renderParadigmOpts() -->
     </div>
-    
-    <!-- Step 3: Categorized Selection Matrix -->
-    <div class="step" id="step-3">
-      <p class="step-q">What is your primary focus right now, <span class="greeting-name" id="g3"></span>?</p>
-      <p class="step-hint">Select the core track that requires immediate expert attention.</p>
-      
-      <!-- Notice-based Explicit Consent moved up to prevent iframe clipping -->
-      <p class="notice-text" style="margin-top: -10px; margin-bottom: 16px; text-align: left; font-size: 11.5px;">
-        By selecting a track below, you agree to our Terms and authorize JeevanKey to process your concern profile and contact you via WhatsApp/SMS for health coordination.
-      </p>
+    <p class="consent-note" id="consent-note"></p>
+    <button class="next-btn" id="btn-3" onclick="submit()">
+      <span id="btn3-label"></span> <span class="next-arrow">→</span>
+    </button>
+  </div>
 
-      <div class="opts" id="concern-opts">
-        <button class="opt" onclick="pickConcern(this,'My mind won't stop — stress, burnout, anxiety')">
-          <span class="opt-icon">🧠</span><span>My mind won't stop — stress, burnout, anxiety</span>
-        </button>
-        <button class="opt" onclick="pickConcern(this,'My digestion is a mess — gut, bloating, IBS')">
-          <span class="opt-icon">🌿</span><span>My digestion is a mess — gut, bloating, IBS</span>
-        </button>
-        <button class="opt" onclick="pickConcern(this,'My body aches — back pain, joints, posture')">
-          <span class="opt-icon">🦴</span><span>My body aches — back pain, joints, posture</span>
-        </button>
-        <button class="opt" onclick="pickConcern(this,'My hormones feel off — periods, PCOD, skin')">
-          <span class="opt-icon">🌙</span><span>My hormones feel off — periods, PCOD, skin</span>
-        </button>
-        <button class="opt" onclick="pickConcern(this,'Low energy all the time — fatigue, motivation')">
-          <span class="opt-icon">⚡</span><span>Low energy all the time — fatigue, motivation</span>
-        </button>
-        <button class="opt" onclick="pickConcern(this,'Managing a long-term condition — diabetes, thyroid, BP')">
-          <span class="opt-icon">📋</span><span>Managing a long-term condition — diabetes, thyroid, BP</span>
-        </button>
+  <!-- ══ DONE ══ -->
+  <div class="step" id="step-done">
+    <div class="done-icon">🚀</div>
+    <h2 class="done-h" id="done-h"></h2>
+    <p class="done-sub" id="done-sub"></p>
+    <div class="summary">
+      <div class="summary-row">
+        <span class="summary-key" id="lbl-name"></span>
+        <span class="summary-val" id="s-name"></span>
       </div>
-      
-      <button class="next-btn" id="btn-3" onclick="submit()">
-        Connect My Care Team <span class="next-arrow">→</span>
-      </button>
-    </div>
-
-    <!-- Step 4: Secure Data Summary & Submission -->
-    <div class="step" id="step-done">
-      <div class="done-icon">🚀</div>
-      <h2 class="done-h">Allocation Complete, <span class="greeting-name" id="g-done"></span>!</h2>
-      <p class="done-sub">Your data profile matched an optimal health track team configuration.</p>
-
-      <div class="summary">
-        <div class="summary-row"><span class="summary-key">Name</span><span class="summary-val" id="s-name">—</span></div>
-        <div class="summary-row"><span class="summary-key">WhatsApp</span><span class="summary-val" id="s-phone">—</span></div>
-        <div class="summary-row"><span class="summary-key">Primary Focus</span><span class="summary-val" id="s-concern">—</span></div>
+      <div class="summary-row">
+        <span class="summary-key" id="lbl-wa"></span>
+        <span class="summary-val" id="s-phone"></span>
       </div>
-
-      <a class="done-wa" id="done-wa-btn" href="#" target="_blank">
-        💬 Securely Open WhatsApp Chat
-      </a>
-
-      <div class="disclaimer">
-        JeevanKey provides health navigation and expert alignment protocols. For medical emergencies, always immediately route requests to emergency response lines (112).
+      <div class="summary-row">
+        <span class="summary-key" id="lbl-track"></span>
+        <span class="summary-val" id="s-paradigm"></span>
       </div>
     </div>
-
+    <a class="done-wa" id="done-wa-btn" href="#" target="_blank">
+      💬 <span id="wa-btn-label"></span>
+    </a>
+    <p class="disclaimer" id="disclaimer-text"></p>
   </div>
 
 </div>
 
 <script>
-/* ── LOCALIZED FUNNEL ARCHITECTURE ── */
-const D = { name: '', phone: '', concern: '', intent: '' }; 
-let currentStep = 1;
-const TOTAL = 3;
+'use strict';
 
-window.addEventListener('DOMContentLoaded', () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const planIntent = urlParams.get('intent');
-  if (planIntent) {
-    D.intent = planIntent.trim().toLowerCase(); 
-  }
-});
+/* ══════════════════════════════════════════════════
+   DATA STORE
+   ══════════════════════════════════════════════════ */
+const D = { name: '', phone: '', paradigm: '', paradigmLabel: '', intent: '' };
+let currentStep = 1;
+let lang = 'hi';
+
+/* ══════════════════════════════════════════════════
+   TRANSLATIONS
+   ══════════════════════════════════════════════════ */
+const T = {
+  hi: {
+    brand_tag: 'Onboarding',
+    prog_step: (n, t) => `कदम ${n} / ${t}`,
+    q_name: 'आपका नाम क्या है?',
+    h_name: 'जो नाम आप पसंद करते हैं वो लिखें।',
+    placeholder_name: 'अपना नाम लिखें',
+    val_name_ok: '✓ बढ़िया!',
+    val_name_err: 'कम से कम 2 अक्षर चाहिए।',
+    q_phone: (name) => `${name}, आपका WhatsApp नंबर क्या है?`,
+    h_phone: 'आपका Coordinator सीधे यहीं संपर्क करेगा।',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ नंबर सही है।',
+    val_phone_err: 'कृपया सही 10 अंकों का भारतीय नंबर दर्ज करें।',
+    q_paradigm: 'आप अपनी सेहत के लिए कौन सा approach पसंद करते हैं?',
+    h_paradigm: 'हम इसी के अनुसार आपकी care team बनाएंगे।',
+    paradigm_opts: [
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, Tests, Prescription' },
+      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, bina English dawai ke' },
+      { val: 'open', icon: '⚖️', main: 'Dono theek hain', sub: 'Mere jawaabon ke basis pe sahi track chunein' },
+    ],
+    consent_note: 'आगे बढ़ने पर आप JeevanKey की Terms of Service से सहमत होते हैं और WhatsApp/SMS पर health coordination के लिए अनुमति देते हैं।',
+    btn_continue: 'आगे बढ़ें',
+    btn_connect: 'मेरी Care Team से जोड़ें',
+    done_h: (name) => `Team Ready, ${name}!`,
+    done_sub: 'आपका profile match हो गया। नीचे WhatsApp Chat खोलें।',
+    lbl_name: 'नाम',
+    lbl_wa: 'WhatsApp',
+    lbl_track: 'Care Track',
+    wa_btn: 'WhatsApp Chat खोलें →',
+    disclaimer: 'JeevanKey एक health coordination service है। Medical emergency में तुरंत 112 पर call करें।',
+    wa_msg: (name, phone, track) =>
+      `Hello JeevanKey, maine onboarding complete ki. Main Terms of Service se sahmat hoon.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nKripya mujhe mere dedicated coordinator aur care team se milayein.`,
+  },
+  en: {
+    brand_tag: 'Onboarding',
+    prog_step: (n, t) => `Step ${n} of ${t}`,
+    q_name: 'What should we call you?',
+    h_name: 'Your preferred first name or nickname works.',
+    placeholder_name: 'Enter your name',
+    val_name_ok: '✓ Looking good!',
+    val_name_err: 'Please enter at least 2 characters.',
+    q_phone: (name) => `Hello ${name}, what is your WhatsApp number?`,
+    h_phone: 'Your coordinator will reach you directly here.',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ Number verified.',
+    val_phone_err: 'Please enter a valid 10-digit Indian mobile number.',
+    q_paradigm: 'Which approach do you prefer for your health?',
+    h_paradigm: 'We will build your care team accordingly.',
+    paradigm_opts: [
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, tests, prescription' },
+      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, without English medicine' },
+      { val: 'open', icon: '⚖️', main: 'Either works for me', sub: 'Let my answers decide the best track' },
+    ],
+    consent_note: 'By continuing you agree to JeevanKey\'s Terms of Service and authorise contact via WhatsApp/SMS for health coordination.',
+    btn_continue: 'Continue',
+    btn_connect: 'Connect My Care Team',
+    done_h: (name) => `Team Ready, ${name}!`,
+    done_sub: 'Your profile has been matched. Open WhatsApp Chat below.',
+    lbl_name: 'Name',
+    lbl_wa: 'WhatsApp',
+    lbl_track: 'Care Track',
+    wa_btn: 'Open WhatsApp Chat →',
+    disclaimer: 'JeevanKey is a health coordination service. For medical emergencies, call 112 immediately.',
+    wa_msg: (name, phone, track) =>
+      `Hello JeevanKey, I completed my onboarding. I accept the terms of service.\n\nName: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nPlease match me with my dedicated coordinator and care team.`,
+  },
+  gu: {
+    brand_tag: 'Onboarding',
+    prog_step: (n, t) => `પગલું ${n} / ${t}`,
+    q_name: 'તમારું નામ શું છે?',
+    h_name: 'તમે જે નામ પસંદ કરો તે લખો.',
+    placeholder_name: 'તમારું નામ લખો',
+    val_name_ok: '✓ સારું!',
+    val_name_err: 'ઓછામાં ઓછા 2 અક્ષર જોઈએ.',
+    q_phone: (name) => `${name}, તમારો WhatsApp નંબર શું છે?`,
+    h_phone: 'તમારો Coordinator અહીં સંપર્ક કરશે.',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ નંબર સાચો છે.',
+    val_phone_err: 'કૃપા કરી 10 અંકનો ભારતીય નંબર દાખલ કરો.',
+    q_paradigm: 'તમે સ્વાસ્થ્ય માટે કઈ approach પસંદ કરો છો?',
+    h_paradigm: 'અમે તે પ્રમાણે care team બનાવીશું.',
+    paradigm_opts: [
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, Tests, Prescription' },
+      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, English દવા વિના' },
+      { val: 'open', icon: '⚖️', main: 'બંને ચાલે', sub: 'મારા જવાબો પ્રમાણે સાચો track પસંદ કરો' },
+    ],
+    consent_note: 'આગળ વધવાથી તમે JeevanKey ની Terms of Service સ્વીકારો છો.',
+    btn_continue: 'આગળ વધો',
+    btn_connect: 'Care Team સાથે જોડો',
+    done_h: (name) => `Team Ready, ${name}!`,
+    done_sub: 'તમારો profile match થઈ ગયો. WhatsApp Chat ખોલો.',
+    lbl_name: 'નામ',
+    lbl_wa: 'WhatsApp',
+    lbl_track: 'Care Track',
+    wa_btn: 'WhatsApp Chat ખોલો →',
+    disclaimer: 'JeevanKey health coordination service છે. Emergency માટે 112 પર call કરો.',
+    wa_msg: (name, phone, track) =>
+      `Hello JeevanKey, maine onboarding complete ki. Terms of Service manzoor hai.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nMujhe coordinator aur care team se milayein.`,
+  },
+  mr: {
+    brand_tag: 'Onboarding',
+    prog_step: (n, t) => `पायरी ${n} / ${t}`,
+    q_name: 'तुमचं नाव काय आहे?',
+    h_name: 'तुम्हाला आवडणारं नाव लिहा.',
+    placeholder_name: 'तुमचं नाव लिहा',
+    val_name_ok: '✓ छान!',
+    val_name_err: 'किमान 2 अक्षरे हवीत.',
+    q_phone: (name) => `${name}, तुमचा WhatsApp नंबर काय आहे?`,
+    h_phone: 'तुमचा Coordinator येथेच संपर्क करेल.',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ नंबर बरोबर आहे.',
+    val_phone_err: 'कृपया 10 अंकी भारतीय नंबर टाका.',
+    q_paradigm: 'तुम्हाला कोणता health approach आवडतो?',
+    h_paradigm: 'त्यानुसार आम्ही तुमची care team बनवू.',
+    paradigm_opts: [
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, Tests, Prescription' },
+      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, इंग्रजी औषधांशिवाय' },
+      { val: 'open', icon: '⚖️', main: 'दोन्ही चालेल', sub: 'माझ्या उत्तरांवरून योग्य track निवडा' },
+    ],
+    consent_note: 'पुढे गेल्यावर तुम्ही JeevanKey च्या Terms of Service ला सहमती देता.',
+    btn_continue: 'पुढे जा',
+    btn_connect: 'Care Team शी जोडा',
+    done_h: (name) => `Team Ready, ${name}!`,
+    done_sub: 'तुमचा profile जुळला. WhatsApp Chat उघडा.',
+    lbl_name: 'नाव',
+    lbl_wa: 'WhatsApp',
+    lbl_track: 'Care Track',
+    wa_btn: 'WhatsApp Chat उघडा →',
+    disclaimer: 'JeevanKey एक health coordination service आहे. Emergency साठी 112 वर call करा.',
+    wa_msg: (name, phone, track) =>
+      `Hello JeevanKey, maine onboarding complete ki. Terms of Service manzoor hai.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nMujhe coordinator aur care team se milayein.`,
+  },
+  bn: {
+    brand_tag: 'Onboarding',
+    prog_step: (n, t) => `ধাপ ${n} / ${t}`,
+    q_name: 'আপনার নাম কী?',
+    h_name: 'আপনার পছন্দের নাম লিখুন।',
+    placeholder_name: 'আপনার নাম লিখুন',
+    val_name_ok: '✓ চমৎকার!',
+    val_name_err: 'কমপক্ষে ২টি অক্ষর দরকার।',
+    q_phone: (name) => `${name}, আপনার WhatsApp নম্বর কী?`,
+    h_phone: 'আপনার Coordinator এখানেই যোগাযোগ করবে।',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ নম্বর সঠিক।',
+    val_phone_err: 'অনুগ্রহ করে ১০ সংখ্যার ভারতীয় নম্বর দিন।',
+    q_paradigm: 'আপনি স্বাস্থ্যের জন্য কোন approach পছন্দ করেন?',
+    h_paradigm: 'আমরা সেই অনুযায়ী আপনার care team তৈরি করব।',
+    paradigm_opts: [
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'ডাক্তার, পরীক্ষা, প্রেসক্রিপশন' },
+      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, ইংরেজি ওষুধ ছাড়া' },
+      { val: 'open', icon: '⚖️', main: 'দুটোই চলবে', sub: 'আমার উত্তর দেখে সঠিক track বেছে নিন' },
+    ],
+    consent_note: 'এগিয়ে গেলে আপনি JeevanKey-এর Terms of Service-এ সম্মত হচ্ছেন।',
+    btn_continue: 'এগিয়ে যান',
+    btn_connect: 'Care Team-এ যুক্ত হন',
+    done_h: (name) => `Team Ready, ${name}!`,
+    done_sub: 'আপনার profile মিলে গেছে। WhatsApp Chat খুলুন।',
+    lbl_name: 'নাম',
+    lbl_wa: 'WhatsApp',
+    lbl_track: 'Care Track',
+    wa_btn: 'WhatsApp Chat খুলুন →',
+    disclaimer: 'JeevanKey একটি health coordination service। জরুরি অবস্থায় 112-তে call করুন।',
+    wa_msg: (name, phone, track) =>
+      `Hello JeevanKey, onboarding complete korlam. Terms of Service mene niyechi.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nDaya kore coordinator o care team er sathe jog korun.`,
+  },
+  ta: {
+    brand_tag: 'Onboarding',
+    prog_step: (n, t) => `படி ${n} / ${t}`,
+    q_name: 'உங்கள் பெயர் என்ன?',
+    h_name: 'நீங்கள் விரும்பும் பெயரை எழுதுங்கள்.',
+    placeholder_name: 'உங்கள் பெயர் எழுதுங்கள்',
+    val_name_ok: '✓ நல்லது!',
+    val_name_err: 'குறைந்தது 2 எழுத்துகள் தேவை.',
+    q_phone: (name) => `${name}, உங்கள் WhatsApp எண் என்ன?`,
+    h_phone: 'உங்கள் Coordinator இங்கே தொடர்பு கொள்வார்.',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ எண் சரி.',
+    val_phone_err: '10 இலக்க இந்திய எண்ணை உள்ளிடுங்கள்.',
+    q_paradigm: 'உங்கள் ஆரோக்கியத்திற்கு எந்த approach விரும்புகிறீர்கள்?',
+    h_paradigm: 'அதற்கு ஏற்ப care team அமைப்போம்.',
+    paradigm_opts: [
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, பரிசோதனை, prescription' },
+      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, ஆங்கில மருந்து இல்லாமல்' },
+      { val: 'open', icon: '⚖️', main: 'இரண்டும் சரி', sub: 'என் பதில்களை வைத்து சரியான track தேர்வு செய்யுங்கள்' },
+    ],
+    consent_note: 'தொடர்வதன் மூலம் JeevanKey Terms of Service ஐ ஒப்புக்கொள்கிறீர்கள்.',
+    btn_continue: 'தொடரு',
+    btn_connect: 'Care Team இணை',
+    done_h: (name) => `Team Ready, ${name}!`,
+    done_sub: 'உங்கள் profile பொருந்தியது. WhatsApp Chat திறங்கள்.',
+    lbl_name: 'பெயர்',
+    lbl_wa: 'WhatsApp',
+    lbl_track: 'Care Track',
+    wa_btn: 'WhatsApp Chat திறக்க →',
+    disclaimer: 'JeevanKey ஒரு health coordination சேவை. அவசரநிலையில் 112 அழைக்கவும்.',
+    wa_msg: (name, phone, track) =>
+      `Hello JeevanKey, onboarding complete aaichu. Terms of Service accept panren.\n\nPeyar: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nEn coordinator um care team um kitta connect pannunga.`,
+  },
+  te: {
+    brand_tag: 'Onboarding',
+    prog_step: (n, t) => `దశ ${n} / ${t}`,
+    q_name: 'మీ పేరు ఏమిటి?',
+    h_name: 'మీకు నచ్చిన పేరు రాయండి.',
+    placeholder_name: 'మీ పేరు రాయండి',
+    val_name_ok: '✓ బాగుంది!',
+    val_name_err: 'కనీసం 2 అక్షరాలు అవసరం.',
+    q_phone: (name) => `${name}, మీ WhatsApp నంబర్ ఏమిటి?`,
+    h_phone: 'మీ Coordinator ఇక్కడే సంప్రదిస్తారు.',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ నంబర్ సరైనది.',
+    val_phone_err: '10 అంకెల భారతీయ నంబర్ నమోదు చేయండి.',
+    q_paradigm: 'మీరు ఆరోగ్యం కోసం ఏ approach ఇష్టపడతారు?',
+    h_paradigm: 'దాని ప్రకారం care team నిర్మిస్తాము.',
+    paradigm_opts: [
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, పరీక్షలు, Prescription' },
+      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, English మందులు లేకుండా' },
+      { val: 'open', icon: '⚖️', main: 'రెండూ సరే', sub: 'నా జవాబుల ఆధారంగా సరైన track ఎంచుకోండి' },
+    ],
+    consent_note: 'కొనసాగించడం ద్వారా మీరు JeevanKey Terms of Service కు అంగీకరిస్తున్నారు.',
+    btn_continue: 'కొనసాగించు',
+    btn_connect: 'Care Team తో కలుపు',
+    done_h: (name) => `Team Ready, ${name}!`,
+    done_sub: 'మీ profile match అయింది. WhatsApp Chat తెరవండి.',
+    lbl_name: 'పేరు',
+    lbl_wa: 'WhatsApp',
+    lbl_track: 'Care Track',
+    wa_btn: 'WhatsApp Chat తెరవండి →',
+    disclaimer: 'JeevanKey ఒక health coordination service. అత్యవసర పరిస్థితిలో 112 కి call చేయండి.',
+    wa_msg: (name, phone, track) =>
+      `Hello JeevanKey, onboarding complete chesanu. Terms of Service accept chesanu.\n\nPeru: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nNanu coordinator mattu care team tho connect cheyyandi.`,
+  },
+  kn: {
+    brand_tag: 'Onboarding',
+    prog_step: (n, t) => `ಹಂತ ${n} / ${t}`,
+    q_name: 'ನಿಮ್ಮ ಹೆಸರೇನು?',
+    h_name: 'ನೀವು ಬಯಸುವ ಹೆಸರು ಬರೆಯಿರಿ.',
+    placeholder_name: 'ನಿಮ್ಮ ಹೆಸರು ಬರೆಯಿರಿ',
+    val_name_ok: '✓ ಚೆನ್ನಾಗಿದೆ!',
+    val_name_err: 'ಕನಿಷ್ಠ 2 ಅಕ್ಷರಗಳು ಬೇಕು.',
+    q_phone: (name) => `${name}, ನಿಮ್ಮ WhatsApp ಸಂಖ್ಯೆ ಏನು?`,
+    h_phone: 'ನಿಮ್ಮ Coordinator ಇಲ್ಲಿ ಸಂಪರ್ಕಿಸುತ್ತಾರೆ.',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ ಸಂಖ್ಯೆ ಸರಿಯಾಗಿದೆ.',
+    val_phone_err: '10 ಅಂಕಿಯ ಭಾರತೀಯ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ.',
+    q_paradigm: 'ನಿಮ್ಮ ಆರೋಗ್ಯಕ್ಕೆ ಯಾವ approach ಇಷ್ಟ?',
+    h_paradigm: 'ಅದಕ್ಕೆ ತಕ್ಕಂತೆ care team ರಚಿಸುತ್ತೇವೆ.',
+    paradigm_opts: [
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, ಪರೀಕ್ಷೆ, Prescription' },
+      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, English ಔಷಧಿ ಇಲ್ಲದೆ' },
+      { val: 'open', icon: '⚖️', main: 'ಎರಡೂ ಸರಿ', sub: 'ನನ್ನ ಉತ್ತರಗಳ ಆಧಾರದಲ್ಲಿ ಸರಿಯಾದ track ಆಯ್ಕೆ ಮಾಡಿ' },
+    ],
+    consent_note: 'ಮುಂದುವರಿಯುವ ಮೂಲಕ ನೀವು JeevanKey Terms of Service ಗೆ ಒಪ್ಪಿಗೆ ನೀಡುತ್ತೀರಿ.',
+    btn_continue: 'ಮುಂದುವರಿಯಿರಿ',
+    btn_connect: 'Care Team ಜೊತೆ ಸೇರಿಸಿ',
+    done_h: (name) => `Team Ready, ${name}!`,
+    done_sub: 'ನಿಮ್ಮ profile match ಆಯಿತು. WhatsApp Chat ತೆರೆಯಿರಿ.',
+    lbl_name: 'ಹೆಸರು',
+    lbl_wa: 'WhatsApp',
+    lbl_track: 'Care Track',
+    wa_btn: 'WhatsApp Chat ತೆರೆಯಿರಿ →',
+    disclaimer: 'JeevanKey ಒಂದು health coordination service. ತುರ್ತುಸ್ಥಿತಿಯಲ್ಲಿ 112 ಗೆ call ಮಾಡಿ.',
+    wa_msg: (name, phone, track) =>
+      `Hello JeevanKey, onboarding complete maadide. Terms of Service accept maadide.\n\nHesaru: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nNannu coordinator mattu care team jote connect maadi.`,
+  },
+  ml: {
+    brand_tag: 'Onboarding',
+    prog_step: (n, t) => `ഘട്ടം ${n} / ${t}`,
+    q_name: 'നിങ്ങളുടെ പേര് എന്താണ്?',
+    h_name: 'നിങ്ങൾ ഇഷ്ടപ്പെടുന്ന പേര് എഴുതുക.',
+    placeholder_name: 'നിങ്ങളുടെ പേര് എഴുതുക',
+    val_name_ok: '✓ നന്ന്!',
+    val_name_err: 'കുറഞ്ഞത് 2 അക്ഷരങ്ങൾ ആവശ്യമാണ്.',
+    q_phone: (name) => `${name}, നിങ്ങളുടെ WhatsApp നമ്പർ എന്താണ്?`,
+    h_phone: 'നിങ്ങളുടെ Coordinator ഇവിടെ ബന്ധപ്പെടും.',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ നമ്പർ ശരിയാണ്.',
+    val_phone_err: 'ദയവായി 10 അക്ക ഇന്ത്യൻ നമ്പർ നൽകുക.',
+    q_paradigm: 'ആരോഗ്യത്തിനായി ഏത് approach ഇഷ്ടപ്പെടുന്നു?',
+    h_paradigm: 'അതനുസരിച്ച് care team ഉണ്ടാക്കും.',
+    paradigm_opts: [
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, പരിശോധന, Prescription' },
+      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, ഇംഗ്ലീഷ് മരുന്ന് ഇല്ലാതെ' },
+      { val: 'open', icon: '⚖️', main: 'രണ്ടും ശരി', sub: 'എന്റെ ഉത്തരങ്ങൾ നോക്കി ശരിയായ track തിരഞ്ഞെടുക്കൂ' },
+    ],
+    consent_note: 'തുടരുന്നതിലൂടെ JeevanKey Terms of Service അംഗീകരിക്കുന്നു.',
+    btn_continue: 'തുടരുക',
+    btn_connect: 'Care Team-ൽ ചേർക്കൂ',
+    done_h: (name) => `Team Ready, ${name}!`,
+    done_sub: 'നിങ്ങളുടെ profile match ആയി. WhatsApp Chat തുറക്കൂ.',
+    lbl_name: 'പേര്',
+    lbl_wa: 'WhatsApp',
+    lbl_track: 'Care Track',
+    wa_btn: 'WhatsApp Chat തുറക്കൂ →',
+    disclaimer: 'JeevanKey ഒരു health coordination service ആണ്. അടിയന്തര സ്ഥിതിക്ക് 112 വിളിക്കുക.',
+    wa_msg: (name, phone, track) =>
+      `Hello JeevanKey, onboarding complete cheshu. Terms of Service accept cheshu.\n\nPer: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nEne coordinator um care team umayi connect cheyyuka.`,
+  },
+};
+
+/* ══════════════════════════════════════════════════
+   HELPERS
+   ══════════════════════════════════════════════════ */
+const TOTAL_STEPS = 3;
+
+function t() { return T[lang] || T.hi; }
 
 function setProgress(step) {
-  const pct = Math.round(((step - 1) / TOTAL) * 100);
-  document.getElementById('progress').style.width = pct + '%';
-  document.getElementById('prog-text').textContent = 'Step ' + step + ' of ' + TOTAL;
+  const pct = Math.round(((step - 1) / TOTAL_STEPS) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = t().prog_step(step, TOTAL_STEPS);
   document.getElementById('prog-pct').textContent = pct + '%';
 }
 
-function nextStep(to) {
-  const leaving = document.getElementById('step-' + currentStep);
-  if (!leaving) return;
-
-  leaving.classList.add('leaving');
-  setTimeout(() => {
-    leaving.classList.remove('active', 'leaving');
-    currentStep = to;
-    const arriving = document.getElementById('step-' + to);
-    if (arriving) {
-      arriving.classList.add('active');
-      setProgress(to);
-      const inp = arriving.querySelector('input');
-      if (inp) setTimeout(() => inp.focus(), 50);
-      
-      const greetings = arriving.querySelectorAll('.greeting-name');
-      greetings.forEach(el => el.textContent = D.name);
-    }
-  }, 250);
+function goTo(step) {
+  const from = document.getElementById('step-' + currentStep);
+  if (from) { from.classList.remove('active'); }
+  currentStep = step;
+  const to = document.getElementById('step-' + step);
+  if (to) {
+    to.classList.add('active');
+    setProgress(step);
+    const inp = to.querySelector('input');
+    if (inp) setTimeout(() => inp.focus(), 80);
+  }
 }
 
-function goToDone() {
-  const leaving = document.getElementById('step-' + currentStep);
-  if (leaving) leaving.classList.add('leaving');
-  
-  setTimeout(() => {
-    if (leaving) leaving.classList.remove('active', 'leaving');
-    
-    document.getElementById('intro-desc').style.display = 'none';
-    document.getElementById('progress-container').style.display = 'none';
-    
-    const done = document.getElementById('step-done');
-    done.classList.add('active');
-
-    document.getElementById('g-done').textContent = D.name;
-    document.getElementById('s-name').textContent = D.name;
-    document.getElementById('s-phone').textContent = '+91 ' + D.phone;
-    document.getElementById('s-concern').textContent = D.concern;
-
-    const planLabel = D.intent ? D.intent.toUpperCase() : 'Not Specified';
-
-    const msg = encodeURIComponent(
-      'Hello JeevanKey, I completed my onboarding. I accept the terms of service.\n\n' +
-      'Name: ' + D.name + '\n' +
-      'WhatsApp: +91 ' + D.phone + '\n' +
-      'Focus Track: ' + D.concern + '\n' +
-      'Please match me with my dedicated coordinator and care team.'
-    );
-    document.getElementById('done-wa-btn').href = 'https://wa.me/919760015878?text=' + msg;
-    sendToSheet();
-  }, 250);
+/* ══════════════════════════════════════════════════
+   LANGUAGE SWITCH
+   ══════════════════════════════════════════════════ */
+function setLang(l) {
+  lang = l;
+  document.getElementById('brand-tag').textContent = t().brand_tag;
+  // Step 1
+  document.getElementById('q-name').textContent = t().q_name;
+  document.getElementById('h-name').textContent = t().h_name;
+  document.getElementById('f-name').placeholder = t().placeholder_name;
+  document.getElementById('btn1-label').textContent = t().btn_continue;
+  // Step 2
+  document.getElementById('q-phone').textContent = t().q_phone(D.name || '…');
+  document.getElementById('h-phone').textContent = t().h_phone;
+  document.getElementById('f-phone').placeholder = t().placeholder_phone;
+  document.getElementById('btn2-label').textContent = t().btn_continue;
+  // Step 3
+  document.getElementById('q-paradigm').textContent = t().q_paradigm;
+  document.getElementById('h-paradigm').textContent = t().h_paradigm;
+  document.getElementById('consent-note').textContent = t().consent_note;
+  document.getElementById('btn3-label').textContent = t().btn_connect;
+  renderParadigmOpts();
+  // Progress
+  setProgress(currentStep);
 }
 
-/* ── GOOGLE SHEETS RELAY AGENT ── */
-function sendToSheet() {
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec'; 
-  if (SHEET_URL.includes('YOUR_GOOGLE_APPS_SCRIPT_URL_HERE')) return; 
-  
-  const urlParams = new URLSearchParams(window.location.search);
-  const detectedIntent = urlParams.get('intent') || D.intent || 'Missing on Frontend';
-
-  const payload = {
-    name:    D.name,
-    phone:   "'+91 " + D.phone,
-    concern: D.concern,
-    intent:  detectedIntent,
-    ts:      new Date().toISOString()
-  };
-  
-  fetch(SHEET_URL, {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-  .catch(() => {});
-}
-
+/* ══════════════════════════════════════════════════
+   STEP 1 — NAME
+   ══════════════════════════════════════════════════ */
 function onName(el) {
   const v = el.value.trim();
   D.name = v;
@@ -605,7 +752,7 @@ function onName(el) {
   if (v.length >= 2) {
     btn.classList.add('on');
     el.classList.add('valid');
-    msg.textContent = '✓ Looking good!';
+    msg.textContent = t().val_name_ok;
     msg.className = 'val-msg show';
   } else {
     btn.classList.remove('on');
@@ -614,22 +761,24 @@ function onName(el) {
   }
 }
 
+/* ══════════════════════════════════════════════════
+   STEP 2 — PHONE
+   ══════════════════════════════════════════════════ */
 function onPhone(el) {
   el.value = el.value.replace(/\D/g, '').slice(0, 10);
   const v = el.value;
   D.phone = v;
   const btn = document.getElementById('btn-2');
   const msg = document.getElementById('val-phone');
-  
   if (v.length === 10 && /^[6-9]/.test(v)) {
     btn.classList.add('on');
     el.classList.add('valid');
-    msg.textContent = '✓ Mobile number format verified.';
+    msg.textContent = t().val_phone_ok;
     msg.className = 'val-msg show';
   } else if (v.length === 10) {
     btn.classList.remove('on');
     el.classList.remove('valid');
-    msg.textContent = 'Please enter a valid 10-digit Indian mobile phone series.';
+    msg.textContent = t().val_phone_err;
     msg.className = 'val-msg show err';
   } else {
     btn.classList.remove('on');
@@ -639,32 +788,106 @@ function onPhone(el) {
 }
 
 function tryPhone() {
-  if (D.phone.length === 10 && /^[6-9]/.test(D.phone)) nextStep(3);
+  if (D.phone.length === 10 && /^[6-9]/.test(D.phone)) goTo(3);
 }
 
-function pickConcern(el, val) {
-  document.querySelectorAll('#concern-opts .opt').forEach(o => o.classList.remove('sel'));
+/* ══════════════════════════════════════════════════
+   STEP 3 — PARADIGM (Q0)
+   ══════════════════════════════════════════════════ */
+function renderParadigmOpts() {
+  const container = document.getElementById('paradigm-opts');
+  const opts = t().paradigm_opts;
+  container.innerHTML = opts.map(o => `
+    <button class="opt${D.paradigm === o.val ? ' sel' : ''}"
+      onclick="pickParadigm(this,'${o.val}')">
+      <span class="opt-icon">${o.icon}</span>
+      <span class="opt-body">
+        <span class="opt-main">${o.main}</span>
+        <span class="opt-sub">${o.sub}</span>
+      </span>
+    </button>
+  `).join('');
+  // Update Q2 question with current name
+  document.getElementById('q-phone').textContent = t().q_phone(D.name || '…');
+}
+
+function pickParadigm(el, val) {
+  D.paradigm = val;
+  // Find label from current lang opts
+  const opt = t().paradigm_opts.find(o => o.val === val);
+  D.paradigmLabel = opt ? opt.main : val;
+  document.querySelectorAll('#paradigm-opts .opt').forEach(b => b.classList.remove('sel'));
   el.classList.add('sel');
-  D.concern = val;
   document.getElementById('btn-3').classList.add('on');
 }
 
+/* ══════════════════════════════════════════════════
+   SUBMIT → DONE SCREEN
+   ══════════════════════════════════════════════════ */
 function submit() {
-  if (!D.concern) return;
-  goToDone();
+  if (!D.paradigm) return;
+
+  // Hide progress
+  document.getElementById('progress-wrap').style.display = 'none';
+
+  // Populate done screen
+  document.getElementById('done-h').textContent = t().done_h(D.name);
+  document.getElementById('done-sub').textContent = t().done_sub;
+  document.getElementById('lbl-name').textContent = t().lbl_name;
+  document.getElementById('lbl-wa').textContent = t().lbl_wa;
+  document.getElementById('lbl-track').textContent = t().lbl_track;
+  document.getElementById('s-name').textContent = D.name;
+  document.getElementById('s-phone').textContent = '+91 ' + D.phone;
+  document.getElementById('s-paradigm').textContent = D.paradigmLabel;
+  document.getElementById('wa-btn-label').textContent = t().wa_btn;
+  document.getElementById('disclaimer-text').textContent = t().disclaimer;
+
+  // Build pre-filled WhatsApp message
+  const msg = encodeURIComponent(t().wa_msg(D.name, D.phone, D.paradigmLabel));
+  document.getElementById('done-wa-btn').href = 'https://wa.me/919760015878?text=' + msg;
+
+  // Transition
+  const from = document.getElementById('step-' + currentStep);
+  if (from) from.classList.remove('active');
+  document.getElementById('step-done').classList.add('active');
+
+  // Google Sheets relay
+  sendToSheet();
 }
-// Automatically broadcast the current screen size to the parent Carrd frame
-const resizeObserver = new ResizeObserver(entries => {
-  for (let entry of entries) {
-    window.parent.postMessage({
-      type: 'resize',
-      height: entry.contentRect.height
-    }, '*');
-  }
+
+/* ══════════════════════════════════════════════════
+   GOOGLE SHEETS RELAY
+   ══════════════════════════════════════════════════ */
+function sendToSheet() {
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec';
+  const urlParams = new URLSearchParams(window.location.search);
+  const payload = {
+    name:    D.name,
+    phone:   "'+91 " + D.phone,
+    concern: D.paradigmLabel,
+    intent:  urlParams.get('intent') || D.paradigm,
+    ts:      new Date().toISOString()
+  };
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(() => {});
+}
+
+/* ══════════════════════════════════════════════════
+   INIT
+   ══════════════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  // Default to Hindi
+  document.getElementById('lang-select').value = 'hi';
+  setLang('hi');
+  setProgress(1);
+  // Intent from URL param (from ad campaigns)
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('intent')) D.intent = urlParams.get('intent').trim().toLowerCase();
 });
-// Attach listener directly to the wrapper card
-resizeObserver.observe(document.querySelector('.wrap'));
-setProgress(1);
 </script>
 </body>
 </html>
