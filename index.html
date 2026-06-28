@@ -864,6 +864,21 @@ function submit() {
 }
 
 /* ══════════════════════════════════════════════════
+   GA4 DISPATCHER
+   Primary: direct gtag if available (GitHub Pages direct visit)
+   Secondary: postMessage to Carrd parent (embedded visit)
+   ══════════════════════════════════════════════════ */
+function _gaEvent(eventName, params) {
+  try {
+    if (typeof gtag === 'function') {
+      gtag('event', eventName, params);
+      return;
+    }
+    window.parent.postMessage({ type: 'jk-ga4-event', eventName: eventName, params: params }, '*');
+  } catch(e) {}
+}
+
+/* ══════════════════════════════════════════════════
    GOOGLE SHEETS RELAY
    ══════════════════════════════════════════════════ */
 function sendToSheet() {
@@ -884,31 +899,24 @@ function sendToSheet() {
     body: JSON.stringify(payload)
   })
   .then(() => {
-    // Fire GA4 event on successful sheet write
-    // Secondary event — observational only, not the primary conversion
-    if (typeof gtag === 'function') {
-      gtag('event', 'jk_onboarding_complete', {
-        paradigm:       D.paradigm,
-        paradigm_label: D.paradigmLabel,
-        lang:           lang,
-        intent:         intentVal,
-        event_category: 'onboarding_funnel',
-        event_label:    'sheet_write_success'
-      });
-    }
+    _gaEvent('jk_onboarding_complete', {
+      paradigm:       D.paradigm,
+      paradigm_label: D.paradigmLabel,
+      lang:           lang,
+      intent:         intentVal,
+      event_category: 'onboarding_funnel',
+      event_label:    'sheet_write_success'
+    });
   })
   .catch(() => {
-    // Still fire event even if sheet write fails — lead captured via WA message
-    if (typeof gtag === 'function') {
-      gtag('event', 'jk_onboarding_complete', {
-        paradigm:       D.paradigm,
-        paradigm_label: D.paradigmLabel,
-        lang:           lang,
-        intent:         intentVal,
-        event_category: 'onboarding_funnel',
-        event_label:    'sheet_write_failed'
-      });
-    }
+    _gaEvent('jk_onboarding_complete', {
+      paradigm:       D.paradigm,
+      paradigm_label: D.paradigmLabel,
+      lang:           lang,
+      intent:         intentVal,
+      event_category: 'onboarding_funnel',
+      event_label:    'sheet_write_failed'
+    });
   });
 }
 
@@ -918,17 +926,14 @@ function sendToSheet() {
    Conversion in GA4 and primary Google Ads conversion.
    ══════════════════════════════════════════════════ */
 function onWaClick() {
-  if (typeof gtag === 'function') {
-    gtag('event', 'jk_onboarding_whatsapp_initiated', {
-      paradigm:       D.paradigm,
-      paradigm_label: D.paradigmLabel,
-      lang:           lang,
-      intent:         new URLSearchParams(window.location.search).get('intent') || D.paradigm,
-      event_category: 'conversion',
-      event_label:    'onboarding_whatsapp_cta'
-    });
-  }
-  // Navigation handled by the href on the <a> tag
+  _gaEvent('jk_onboarding_whatsapp_initiated', {
+    paradigm:       D.paradigm,
+    paradigm_label: D.paradigmLabel,
+    lang:           lang,
+    intent:         new URLSearchParams(window.location.search).get('intent') || D.paradigm,
+    event_category: 'conversion',
+    event_label:    'onboarding_whatsapp_cta'
+  });
 }
 
 /* ══════════════════════════════════════════════════
