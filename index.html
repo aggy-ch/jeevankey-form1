@@ -4,14 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JeevanKey — Apni Care Team Banayein</title>
-<!-- Google tag (gtag.js) — JeevanKey GA4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JQG3B09294"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-JQG3B09294', { send_page_view: true });
-</script>
+<!-- GA4 lives on the Carrd parent page only.
+     Events fire via window.top.postMessage to the Carrd bridge listener.
+     Do NOT add a gtag script here — it would short-circuit the postMessage path. -->
 <style>
 :root {
   --navy:    #0C447C;
