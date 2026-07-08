@@ -385,6 +385,7 @@ body {
    DATA STORE
    ══════════════════════════════════════════════════ */
 const D = { name: '', phone: '', paradigm: '', paradigmLabel: '', intent: '' };
+const _stepFired = { name: false, phone: false, paradigm: false };
 let currentStep = 1;
 let lang = 'hi';
 
@@ -757,6 +758,14 @@ function onName(el) {
     el.classList.add('valid');
     msg.textContent = t().val_name_ok;
     msg.className = 'val-msg show';
+    if (!_stepFired.name) {
+      _stepFired.name = true;
+      _gaEvent('jk_onboarding_step', {
+        step: 'name_entered',
+        event_category: 'onboarding_funnel',
+        event_label: 'step_1_name'
+      });
+    }
   } else {
     btn.classList.remove('on');
     el.classList.remove('valid');
@@ -778,6 +787,14 @@ function onPhone(el) {
     el.classList.add('valid');
     msg.textContent = t().val_phone_ok;
     msg.className = 'val-msg show';
+    if (!_stepFired.phone) {
+      _stepFired.phone = true;
+      _gaEvent('jk_onboarding_step', {
+        step: 'phone_entered',
+        event_category: 'onboarding_funnel',
+        event_label: 'step_2_phone'
+      });
+    }
   } else if (v.length === 10) {
     btn.classList.remove('on');
     el.classList.remove('valid');
@@ -822,6 +839,15 @@ function pickParadigm(el, val) {
   document.querySelectorAll('#paradigm-opts .opt').forEach(b => b.classList.remove('sel'));
   el.classList.add('sel');
   document.getElementById('btn-3').classList.add('on');
+  if (!_stepFired.paradigm) {
+    _stepFired.paradigm = true;
+    _gaEvent('jk_onboarding_step', {
+      step: 'paradigm_selected',
+      paradigm: val,
+      event_category: 'onboarding_funnel',
+      event_label: 'step_3_paradigm'
+    });
+  }
 }
 
 /* ══════════════════════════════════════════════════
