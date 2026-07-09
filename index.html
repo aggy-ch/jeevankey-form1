@@ -171,29 +171,40 @@ body {
   margin-top: 1px;
 }
 
-/* ── Options (Q0 paradigm) ── */
-.opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
+/* ── Options (Q0 paradigm) — row layout ── */
+.opts { display: flex; flex-direction: row; gap: 8px; margin-bottom: 4px; }
 .opt {
+  flex: 1;
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 14px 16px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  padding: 14px 8px;
   background: var(--white);
   border: 1.5px solid #d2dbe1;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   font-family: var(--sans);
-  text-align: left;
-  width: 100%;
+  text-align: center;
   transition: all .2s var(--ease);
+  min-width: 0;
 }
 .opt:hover { border-color: var(--green-l); background: #fbfdfa; }
 .opt.sel { border-color: var(--green); background: #f4faf0; }
-.opt-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-.opt-body { display: flex; flex-direction: column; gap: 3px; }
-.opt-main { font-size: 14.5px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+.opt-icon { font-size: 22px; line-height: 1; }
+.opt-body { display: flex; flex-direction: column; gap: 2px; width: 100%; }
+.opt-main { font-size: 12.5px; font-weight: 700; color: var(--ink); line-height: 1.25; }
 .opt.sel .opt-main { color: var(--green-d); }
-.opt-sub { font-size: 12px; color: var(--ink-4); line-height: 1.4; }
+.opt-sub { font-size: 9.5px; color: var(--ink-4); line-height: 1.3; }
+
+.paradigm-note {
+  font-size: 11px;
+  color: var(--ink-4);
+  line-height: 1.5;
+  margin-top: 10px;
+  text-align: center;
+}
 
 /* ── Consent notice ── */
 .consent-note {
@@ -316,6 +327,7 @@ body {
     <div class="opts" id="paradigm-opts">
       <!-- options injected by renderParadigmOpts() -->
     </div>
+    <p class="paradigm-note" id="paradigm-note"></p>
 
     <div class="field-group">
       <div class="field-label" id="lbl-name-field"></div>
@@ -396,10 +408,11 @@ const T = {
     q_paradigm: 'आप अपनी सेहत के लिए कौन सा approach पसंद करते हैं?',
     h_paradigm: 'हम इसी के अनुसार आपकी health team बनाएंगे।',
     paradigm_opts: [
-      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, Tests, Prescription' },
-      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, bina English dawai ke' },
-      { val: 'open', icon: '⚖️', main: 'Dono theek hain', sub: 'Mere jawaabon ke basis pe sahi track chunein' },
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
+      { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
+      { val: 'homeopathic', icon: '💧', main: 'Homeopathy', sub: 'Gentle, natural' },
     ],
+    change_note: 'आप अपनी पसंद payment से पहले कभी भी बदल सकते हैं।',
     lbl_name_field: 'आपका नाम',
     placeholder_name: 'अपना नाम लिखें',
     val_name_ok: '✓ बढ़िया!',
@@ -426,10 +439,11 @@ const T = {
     q_paradigm: 'Which approach do you prefer for your health?',
     h_paradigm: 'We will build your health team accordingly.',
     paradigm_opts: [
-      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, tests, prescription' },
-      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, without English medicine' },
-      { val: 'open', icon: '⚖️', main: 'Either works for me', sub: 'Let my answers decide the best track' },
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
+      { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
+      { val: 'homeopathic', icon: '💧', main: 'Homeopathy', sub: 'Gentle, natural' },
     ],
+    change_note: 'You can change your choice anytime before payment.',
     lbl_name_field: 'Your name',
     placeholder_name: 'Enter your name',
     val_name_ok: '✓ Looking good!',
@@ -456,10 +470,11 @@ const T = {
     q_paradigm: 'તમે સ્વાસ્થ્ય માટે કઈ approach પસંદ કરો છો?',
     h_paradigm: 'અમે તે પ્રમાણે health team બનાવીશું.',
     paradigm_opts: [
-      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, Tests, Prescription' },
-      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, English દવા વિના' },
-      { val: 'open', icon: '⚖️', main: 'બંને ચાલે', sub: 'મારા જવાબો પ્રમાણે સાચો track પસંદ કરો' },
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
+      { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
+      { val: 'homeopathic', icon: '💧', main: 'Homeopathy', sub: 'Gentle, natural' },
     ],
+    change_note: 'તમે તમારી પસંદગી payment પહેલાં ગમે ત્યારે બદલી શકો છો.',
     lbl_name_field: 'તમારું નામ',
     placeholder_name: 'તમારું નામ લખો',
     val_name_ok: '✓ સારું!',
@@ -486,10 +501,11 @@ const T = {
     q_paradigm: 'तुम्हाला कोणता health approach आवडतो?',
     h_paradigm: 'त्यानुसार आम्ही तुमची health team बनवू.',
     paradigm_opts: [
-      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, Tests, Prescription' },
-      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, इंग्रजी औषधांशिवाय' },
-      { val: 'open', icon: '⚖️', main: 'दोन्ही चालेल', sub: 'माझ्या उत्तरांवरून योग्य track निवडा' },
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
+      { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
+      { val: 'homeopathic', icon: '💧', main: 'Homeopathy', sub: 'Gentle, natural' },
     ],
+    change_note: 'तुम्ही तुमची निवड payment आधी केव्हाही बदलू शकता.',
     lbl_name_field: 'तुमचं नाव',
     placeholder_name: 'तुमचं नाव लिहा',
     val_name_ok: '✓ छान!',
@@ -516,10 +532,11 @@ const T = {
     q_paradigm: 'আপনি স্বাস্থ্যের জন্য কোন approach পছন্দ করেন?',
     h_paradigm: 'আমরা সেই অনুযায়ী আপনার health team তৈরি করব।',
     paradigm_opts: [
-      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'ডাক্তার, পরীক্ষা, প্রেসক্রিপশন' },
-      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, ইংরেজি ওষুধ ছাড়া' },
-      { val: 'open', icon: '⚖️', main: 'দুটোই চলবে', sub: 'আমার উত্তর দেখে সঠিক track বেছে নিন' },
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
+      { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
+      { val: 'homeopathic', icon: '💧', main: 'Homeopathy', sub: 'Gentle, natural' },
     ],
+    change_note: 'আপনি payment এর আগে যেকোনো সময় আপনার পছন্দ পরিবর্তন করতে পারেন।',
     lbl_name_field: 'আপনার নাম',
     placeholder_name: 'আপনার নাম লিখুন',
     val_name_ok: '✓ চমৎকার!',
@@ -546,10 +563,11 @@ const T = {
     q_paradigm: 'உங்கள் ஆரோக்கியத்திற்கு எந்த approach விரும்புகிறீர்கள்?',
     h_paradigm: 'அதற்கு ஏற்ப health team அமைப்போம்.',
     paradigm_opts: [
-      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, பரிசோதனை, prescription' },
-      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, ஆங்கில மருந்து இல்லாமல்' },
-      { val: 'open', icon: '⚖️', main: 'இரண்டும் சரி', sub: 'என் பதில்களை வைத்து சரியான track தேர்வு செய்யுங்கள்' },
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
+      { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
+      { val: 'homeopathic', icon: '💧', main: 'Homeopathy', sub: 'Gentle, natural' },
     ],
+    change_note: 'நீங்கள் payment செய்வதற்கு முன் எப்போது வேண்டுமானாலும் உங்கள் தேர்வை மாற்றலாம்.',
     lbl_name_field: 'உங்கள் பெயர்',
     placeholder_name: 'உங்கள் பெயர் எழுதுங்கள்',
     val_name_ok: '✓ நல்லது!',
@@ -576,10 +594,11 @@ const T = {
     q_paradigm: 'మీరు ఆరోగ్యం కోసం ఏ approach ఇష్టపడతారు?',
     h_paradigm: 'దాని ప్రకారం health team నిర్మిస్తాము.',
     paradigm_opts: [
-      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, పరీక్షలు, Prescription' },
-      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, English మందులు లేకుండా' },
-      { val: 'open', icon: '⚖️', main: 'రెండూ సరే', sub: 'నా జవాబుల ఆధారంగా సరైన track ఎంచుకోండి' },
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
+      { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
+      { val: 'homeopathic', icon: '💧', main: 'Homeopathy', sub: 'Gentle, natural' },
     ],
+    change_note: 'మీరు payment కి ముందు ఎప్పుడైనా మీ ఎంపికను మార్చుకోవచ్చు.',
     lbl_name_field: 'మీ పేరు',
     placeholder_name: 'మీ పేరు రాయండి',
     val_name_ok: '✓ బాగుంది!',
@@ -606,10 +625,11 @@ const T = {
     q_paradigm: 'ನಿಮ್ಮ ಆರೋಗ್ಯಕ್ಕೆ ಯಾವ approach ಇಷ್ಟ?',
     h_paradigm: 'ಅದಕ್ಕೆ ತಕ್ಕಂತೆ health team ರಚಿಸುತ್ತೇವೆ.',
     paradigm_opts: [
-      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, ಪರೀಕ್ಷೆ, Prescription' },
-      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, English ಔಷಧಿ ಇಲ್ಲದೆ' },
-      { val: 'open', icon: '⚖️', main: 'ಎರಡೂ ಸರಿ', sub: 'ನನ್ನ ಉತ್ತರಗಳ ಆಧಾರದಲ್ಲಿ ಸರಿಯಾದ track ಆಯ್ಕೆ ಮಾಡಿ' },
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
+      { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
+      { val: 'homeopathic', icon: '💧', main: 'Homeopathy', sub: 'Gentle, natural' },
     ],
+    change_note: 'ನೀವು payment ಮಾಡುವ ಮೊದಲು ಯಾವಾಗ ಬೇಕಾದರೂ ನಿಮ್ಮ ಆಯ್ಕೆಯನ್ನು ಬದಲಾಯಿಸಬಹುದು.',
     lbl_name_field: 'ನಿಮ್ಮ ಹೆಸರು',
     placeholder_name: 'ನಿಮ್ಮ ಹೆಸರು ಬರೆಯಿರಿ',
     val_name_ok: '✓ ಚೆನ್ನಾಗಿದೆ!',
@@ -636,10 +656,11 @@ const T = {
     q_paradigm: 'ആരോഗ്യത്തിനായി ഏത് approach ഇഷ്ടപ്പെടുന്നു?',
     h_paradigm: 'അതനുസരിച്ച് health team ഉണ്ടാക്കും.',
     paradigm_opts: [
-      { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, പരിശോധന, Prescription' },
-      { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, ഇംഗ്ലീഷ് മരുന്ന് ഇല്ലാതെ' },
-      { val: 'open', icon: '⚖️', main: 'രണ്ടും ശരി', sub: 'എന്റെ ഉത്തരങ്ങൾ നോക്കി ശരിയായ track തിരഞ്ഞെടുക്കൂ' },
+      { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
+      { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
+      { val: 'homeopathic', icon: '💧', main: 'Homeopathy', sub: 'Gentle, natural' },
     ],
+    change_note: 'നിങ്ങൾക്ക് payment ചെയ്യുന്നതിന് മുമ്പ് എപ്പോൾ വേണമെങ്കിലും നിങ്ങളുടെ തിരഞ്ഞെടുപ്പ് മാറ്റാം.',
     lbl_name_field: 'നിങ്ങളുടെ പേര്',
     placeholder_name: 'നിങ്ങളുടെ പേര് എഴുതുക',
     val_name_ok: '✓ നന്ന്!',
@@ -664,6 +685,25 @@ const T = {
 };
 
 /* ══════════════════════════════════════════════════
+   HEIGHT BROADCAST — tells the Carrd parent iframe
+   how tall this form actually is, so the embed can
+   resize itself instead of clipping or leaving gaps.
+   ══════════════════════════════════════════════════ */
+function _broadcastHeight() {
+  try {
+    const h = document.body.scrollHeight;
+    window.top.postMessage({ type: 'resize', height: h }, '*');
+  } catch(e) {}
+}
+
+if (typeof ResizeObserver !== 'undefined') {
+  new ResizeObserver(() => _broadcastHeight()).observe(document.body);
+} else {
+  // Fallback for older browsers — periodic check
+  setInterval(_broadcastHeight, 500);
+}
+
+/* ══════════════════════════════════════════════════
    HELPERS
    ══════════════════════════════════════════════════ */
 function t() { return T[lang] || T.hi; }
@@ -678,6 +718,7 @@ function setLang(l) {
   document.getElementById('q-paradigm').textContent = t().q_paradigm;
   document.getElementById('h-paradigm').textContent = t().h_paradigm;
   renderParadigmOpts();
+  document.getElementById('paradigm-note').textContent = t().change_note;
 
   document.getElementById('lbl-name-field').textContent = t().lbl_name_field;
   document.getElementById('f-name').placeholder = t().placeholder_name;
@@ -918,6 +959,8 @@ window.addEventListener('DOMContentLoaded', () => {
   // Intent from URL param (from ad campaigns)
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('intent')) D.intent = urlParams.get('intent').trim().toLowerCase();
+  // Send initial height immediately, don't wait for observer's first tick
+  setTimeout(_broadcastHeight, 100);
 });
 </script>
 </body>
