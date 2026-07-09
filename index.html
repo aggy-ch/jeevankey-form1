@@ -686,21 +686,22 @@ const T = {
 
 /* ══════════════════════════════════════════════════
    HEIGHT BROADCAST — tells the Carrd parent iframe
-   how tall this form actually is, so the embed can
-   resize itself instead of clipping or leaving gaps.
+   how tall this form actually is.
+   Measures .wrap (the content card), NOT document.body —
+   body has min-height:100vh and is viewport-dependent,
+   which creates a feedback loop when the parent resizes
+   the iframe (iframe resize → vh changes → body resize →
+   re-broadcast → iframe resize again, unbounded).
+   .wrap's height only changes when real content changes,
+   so it's safe to measure and broadcast at fixed points
+   only — never on a continuous observer.
    ══════════════════════════════════════════════════ */
 function _broadcastHeight() {
   try {
-    const h = document.body.scrollHeight;
+    const wrap = document.querySelector('.wrap');
+    const h = wrap ? wrap.offsetHeight : document.body.scrollHeight;
     window.top.postMessage({ type: 'resize', height: h }, '*');
   } catch(e) {}
-}
-
-if (typeof ResizeObserver !== 'undefined') {
-  new ResizeObserver(() => _broadcastHeight()).observe(document.body);
-} else {
-  // Fallback for older browsers — periodic check
-  setInterval(_broadcastHeight, 500);
 }
 
 /* ══════════════════════════════════════════════════
@@ -729,6 +730,8 @@ function setLang(l) {
 
   document.getElementById('consent-note').textContent = t().consent_note;
   document.getElementById('btn-submit-label').textContent = t().btn_connect;
+
+  setTimeout(_broadcastHeight, 60);
 }
 
 /* ══════════════════════════════════════════════════
@@ -871,6 +874,8 @@ function submit() {
   // Transition
   document.getElementById('step-form').classList.remove('active');
   document.getElementById('step-done').classList.add('active');
+
+  setTimeout(_broadcastHeight, 60);
 
   // Google Sheets relay + GA4 lead event
   sendToSheet();
