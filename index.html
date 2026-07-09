@@ -241,11 +241,26 @@ body {
 .next-btn:hover .next-arrow { transform: translateX(3px); }
 
 .next-btn.wa-style {
-  background: var(--wa);
   gap: 9px;
 }
-.next-btn.wa-style:hover { background: var(--wa-d); }
+#btn-submit {
+  opacity: 1;
+  pointer-events: all;
+  background: #a8b6bd;
+}
+#btn-submit:hover { background: #94a4ac; }
+#btn-submit.on { background: var(--wa); }
+#btn-submit.on:hover { background: var(--wa-d); }
 .next-btn.wa-style svg { flex-shrink: 0; }
+
+@keyframes jkShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+.attn-flash { animation: jkShake .4s ease-in-out; }
+.field-input.attn-flash { border-color: #d32f2f !important; }
+#paradigm-opts.attn-flash .opt { border-color: #d32f2f; }
 
 .disclaimer {
   font-size: 10.5px;
@@ -810,16 +825,59 @@ function _buildWaHref() {
 }
 
 /* ══════════════════════════════════════════════════
+   GUIDE TO MISSING FIELD
+   Called when the button is tapped before the form
+   is fully valid. Scrolls to and highlights the first
+   thing still missing, in priority order.
+   ══════════════════════════════════════════════════ */
+function _guideToMissingField() {
+  if (!D.paradigm) {
+    const el = document.getElementById('paradigm-opts');
+    el.classList.add('attn-flash');
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => el.classList.remove('attn-flash'), 500);
+    return;
+  }
+  if (D.name.length < 2) {
+    const el = document.getElementById('f-name');
+    const msg = document.getElementById('val-name');
+    el.classList.add('attn-flash');
+    el.focus();
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    msg.textContent = t().val_name_err;
+    msg.className = 'val-msg show err';
+    setTimeout(() => el.classList.remove('attn-flash'), 500);
+    return;
+  }
+  if (!(D.phone.length === 10 && /^[6-9]/.test(D.phone))) {
+    const el = document.getElementById('f-phone');
+    const msg = document.getElementById('val-phone');
+    el.classList.add('attn-flash');
+    el.focus();
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    msg.textContent = t().val_phone_err;
+    msg.className = 'val-msg show err';
+    setTimeout(() => el.classList.remove('attn-flash'), 500);
+  }
+}
+
+/* ══════════════════════════════════════════════════
    FINAL CLICK — the single combined action.
    Opens WhatsApp (native <a> navigation, href already
    built by _buildWaHref), fires jk_onboarding_complete,
    and writes to the Google Sheet — all in one motion.
+   If the form isn't valid yet, guides to what's missing
+   instead of silently doing nothing.
    ══════════════════════════════════════════════════ */
 function onFinalClick(e) {
   const nameOk    = D.name.length >= 2;
   const phoneOk   = D.phone.length === 10 && /^[6-9]/.test(D.phone);
   const paradigmOk = !!D.paradigm;
-  if (!(nameOk && phoneOk && paradigmOk)) { e.preventDefault(); return; }
+  if (!(nameOk && phoneOk && paradigmOk)) {
+    e.preventDefault();
+    _guideToMissingField();
+    return;
+  }
 
   const urlParams = new URLSearchParams(window.location.search);
   _gaEvent('jk_onboarding_complete', {
