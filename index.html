@@ -55,7 +55,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 28px;
+  margin-bottom: 24px;
 }
 .brand-left {
   display: flex;
@@ -84,18 +84,6 @@ body {
   font-family: var(--sans);
 }
 
-/* ── Progress ── */
-.progress-wrap { margin-bottom: 24px; }
-.progress-meta {
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  color: var(--ink-4);
-  margin-bottom: 6px;
-}
-.progress-bar { height: 3px; background: #edf2f5; border-radius: 2px; }
-.progress-fill { height: 100%; background: var(--green); border-radius: 2px; transition: width .4s var(--ease); }
-
 /* ── Steps ── */
 .step { display: none; }
 .step.active { display: block; animation: fadeUp .3s var(--ease); }
@@ -111,10 +99,20 @@ body {
 .step-hint {
   font-size: 13px;
   color: var(--ink-3);
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   line-height: 1.5;
 }
 .hi-name { color: var(--green); font-weight: 700; }
+
+/* ── Field group labels (single-page layout) ── */
+.field-label {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.field-group { margin-top: 22px; }
 
 /* ── Text input ── */
 .field-wrap { margin-bottom: 4px; }
@@ -156,6 +154,23 @@ body {
 .val-msg.show { display: block; }
 .val-msg.err { color: #d32f2f; }
 
+/* ── Phone safety reassurance ── */
+.phone-safety-note {
+  font-size: 12px;
+  color: var(--green-d);
+  margin-top: 7px;
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+}
+.phone-safety-note::before {
+  content: '🔒';
+  font-size: 11px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
 /* ── Options (Q0 paradigm) ── */
 .opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
 .opt {
@@ -185,7 +200,7 @@ body {
   font-size: 11px;
   color: var(--ink-4);
   line-height: 1.5;
-  margin-top: 12px;
+  margin-top: 18px;
 }
 
 /* ── Next button ── */
@@ -294,60 +309,44 @@ body {
     </select>
   </div>
 
-  <!-- Progress -->
-  <div class="progress-wrap" id="progress-wrap">
-    <div class="progress-meta">
-      <span id="prog-text"></span>
-      <span id="prog-pct"></span>
-    </div>
-    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
-  </div>
-
-  <!-- ══ STEP 1: Name ══ -->
-  <div class="step active" id="step-1">
-    <p class="step-q" id="q-name"></p>
-    <p class="step-hint" id="h-name"></p>
-    <div class="field-wrap">
-      <input class="field-input" type="text" id="f-name"
-        autocomplete="given-name" autocapitalize="words" maxlength="40"
-        oninput="onName(this)"
-        onkeydown="if(event.key==='Enter'&&this.value.trim().length>=2) goTo(2)">
-      <div class="val-msg" id="val-name"></div>
-    </div>
-    <button class="next-btn" id="btn-1" onclick="goTo(2)">
-      <span id="btn1-label"></span> <span class="next-arrow">→</span>
-    </button>
-  </div>
-
-  <!-- ══ STEP 2: Phone ══ -->
-  <div class="step" id="step-2">
-    <p class="step-q" id="q-phone"></p>
-    <p class="step-hint" id="h-phone"></p>
-    <div class="field-wrap">
-      <div class="phone-wrap">
-        <div class="phone-code">🇮🇳 +91</div>
-        <input class="field-input phone-input" type="tel" id="f-phone"
-          maxlength="10" inputmode="numeric" pattern="[0-9]*"
-          oninput="onPhone(this)"
-          onkeydown="if(event.key==='Enter') tryPhone()">
-      </div>
-      <div class="val-msg" id="val-phone"></div>
-    </div>
-    <button class="next-btn" id="btn-2" onclick="goTo(3)">
-      <span id="btn2-label"></span> <span class="next-arrow">→</span>
-    </button>
-  </div>
-
-  <!-- ══ STEP 3: Paradigm (Q0) ══ -->
-  <div class="step" id="step-3">
+  <!-- ══ SINGLE FORM: Paradigm + Name + Phone ══ -->
+  <div class="step active" id="step-form">
     <p class="step-q" id="q-paradigm"></p>
     <p class="step-hint" id="h-paradigm"></p>
     <div class="opts" id="paradigm-opts">
       <!-- options injected by renderParadigmOpts() -->
     </div>
+
+    <div class="field-group">
+      <div class="field-label" id="lbl-name-field"></div>
+      <div class="field-wrap">
+        <input class="field-input" type="text" id="f-name"
+          autocomplete="given-name" autocapitalize="words" maxlength="40"
+          oninput="onName(this)"
+          onkeydown="if(event.key==='Enter'){ document.getElementById('f-phone').focus(); }">
+        <div class="val-msg" id="val-name"></div>
+      </div>
+    </div>
+
+    <div class="field-group">
+      <div class="field-label" id="lbl-phone-field"></div>
+      <div class="field-wrap">
+        <div class="phone-wrap">
+          <div class="phone-code">🇮🇳 +91</div>
+          <input class="field-input phone-input" type="tel" id="f-phone"
+            maxlength="10" inputmode="numeric" pattern="[0-9]*"
+            oninput="onPhone(this)"
+            onkeydown="if(event.key==='Enter') trySubmit()">
+        </div>
+        <div class="val-msg" id="val-phone"></div>
+        <div class="phone-safety-note" id="phone-safety-note"></div>
+      </div>
+    </div>
+
     <p class="consent-note" id="consent-note"></p>
-    <button class="next-btn" id="btn-3" onclick="submit()">
-      <span id="btn3-label"></span> <span class="next-arrow">→</span>
+
+    <button class="next-btn" id="btn-submit" onclick="submit()">
+      <span id="btn-submit-label"></span> <span class="next-arrow">→</span>
     </button>
   </div>
 
@@ -386,7 +385,6 @@ body {
    ══════════════════════════════════════════════════ */
 const D = { name: '', phone: '', paradigm: '', paradigmLabel: '', intent: '' };
 const _stepFired = { name: false, phone: false, paradigm: false };
-let currentStep = 1;
 let lang = 'hi';
 
 /* ══════════════════════════════════════════════════
@@ -395,27 +393,24 @@ let lang = 'hi';
 const T = {
   hi: {
     brand_tag: 'Onboarding',
-    prog_step: (n, t) => `कदम ${n} / ${t}`,
-    q_name: 'आपका नाम क्या है?',
-    h_name: 'जो नाम आप पसंद करते हैं वो लिखें।',
-    placeholder_name: 'अपना नाम लिखें',
-    val_name_ok: '✓ बढ़िया!',
-    val_name_err: 'कम से कम 2 अक्षर चाहिए।',
-    q_phone: (name) => `${name}, आपका WhatsApp नंबर क्या है?`,
-    h_phone: 'आपका Coordinator सीधे यहीं संपर्क करेगा।',
-    placeholder_phone: '98765 43210',
-    val_phone_ok: '✓ नंबर सही है।',
-    val_phone_err: 'कृपया सही 10 अंकों का भारतीय नंबर दर्ज करें।',
     q_paradigm: 'आप अपनी सेहत के लिए कौन सा approach पसंद करते हैं?',
-    h_paradigm: 'हम इसी के अनुसार आपकी care team बनाएंगे।',
+    h_paradigm: 'हम इसी के अनुसार आपकी health team बनाएंगे।',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, Tests, Prescription' },
       { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, bina English dawai ke' },
       { val: 'open', icon: '⚖️', main: 'Dono theek hain', sub: 'Mere jawaabon ke basis pe sahi track chunein' },
     ],
+    lbl_name_field: 'आपका नाम',
+    placeholder_name: 'अपना नाम लिखें',
+    val_name_ok: '✓ बढ़िया!',
+    val_name_err: 'कम से कम 2 अक्षर चाहिए।',
+    lbl_phone_field: 'आपका WhatsApp नंबर',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ नंबर सही है।',
+    val_phone_err: 'कृपया सही 10 अंकों का भारतीय नंबर दर्ज करें।',
+    phone_safety_note: 'आपका number सुरक्षित है, किसी से share नहीं होता।',
     consent_note: 'आगे बढ़ने पर आप JeevanKey की Terms of Service से सहमत होते हैं और WhatsApp/SMS पर health coordination के लिए अनुमति देते हैं।',
-    btn_continue: 'आगे बढ़ें',
-    btn_connect: 'मेरी Care Team से जोड़ें',
+    btn_connect: 'मेरी Health Team से जोड़ें',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'आपका profile match हो गया। नीचे WhatsApp Chat खोलें।',
     lbl_name: 'नाम',
@@ -424,31 +419,28 @@ const T = {
     wa_btn: 'WhatsApp Chat खोलें →',
     disclaimer: 'JeevanKey एक health coordination service है। Medical emergency में तुरंत 112 पर call करें।',
     wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, maine onboarding complete ki. Main Terms of Service se sahmat hoon.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nKripya mujhe mere dedicated coordinator aur care team se milayein.`,
+      `Hello JeevanKey, maine onboarding complete ki. Main Terms of Service se sahmat hoon.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nKripya mujhe mere dedicated health manager aur health team se milayein.`,
   },
   en: {
     brand_tag: 'Onboarding',
-    prog_step: (n, t) => `Step ${n} of ${t}`,
-    q_name: 'What should we call you?',
-    h_name: 'Your preferred first name or nickname works.',
-    placeholder_name: 'Enter your name',
-    val_name_ok: '✓ Looking good!',
-    val_name_err: 'Please enter at least 2 characters.',
-    q_phone: (name) => `Hello ${name}, what is your WhatsApp number?`,
-    h_phone: 'Your coordinator will reach you directly here.',
-    placeholder_phone: '98765 43210',
-    val_phone_ok: '✓ Number verified.',
-    val_phone_err: 'Please enter a valid 10-digit Indian mobile number.',
     q_paradigm: 'Which approach do you prefer for your health?',
-    h_paradigm: 'We will build your care team accordingly.',
+    h_paradigm: 'We will build your health team accordingly.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, tests, prescription' },
       { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, without English medicine' },
       { val: 'open', icon: '⚖️', main: 'Either works for me', sub: 'Let my answers decide the best track' },
     ],
+    lbl_name_field: 'Your name',
+    placeholder_name: 'Enter your name',
+    val_name_ok: '✓ Looking good!',
+    val_name_err: 'Please enter at least 2 characters.',
+    lbl_phone_field: 'Your WhatsApp number',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ Number verified.',
+    val_phone_err: 'Please enter a valid 10-digit Indian mobile number.',
+    phone_safety_note: 'Your number is safe. We never share it with anyone.',
     consent_note: 'By continuing you agree to JeevanKey\'s Terms of Service and authorise contact via WhatsApp/SMS for health coordination.',
-    btn_continue: 'Continue',
-    btn_connect: 'Connect My Care Team',
+    btn_connect: 'Connect My Health Team',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'Your profile has been matched. Open WhatsApp Chat below.',
     lbl_name: 'Name',
@@ -457,31 +449,28 @@ const T = {
     wa_btn: 'Open WhatsApp Chat →',
     disclaimer: 'JeevanKey is a health coordination service. For medical emergencies, call 112 immediately.',
     wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, I completed my onboarding. I accept the terms of service.\n\nName: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nPlease match me with my dedicated coordinator and care team.`,
+      `Hello JeevanKey, I completed my onboarding. I accept the terms of service.\n\nName: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nPlease match me with my dedicated health manager and health team.`,
   },
   gu: {
     brand_tag: 'Onboarding',
-    prog_step: (n, t) => `પગલું ${n} / ${t}`,
-    q_name: 'તમારું નામ શું છે?',
-    h_name: 'તમે જે નામ પસંદ કરો તે લખો.',
-    placeholder_name: 'તમારું નામ લખો',
-    val_name_ok: '✓ સારું!',
-    val_name_err: 'ઓછામાં ઓછા 2 અક્ષર જોઈએ.',
-    q_phone: (name) => `${name}, તમારો WhatsApp નંબર શું છે?`,
-    h_phone: 'તમારો Coordinator અહીં સંપર્ક કરશે.',
-    placeholder_phone: '98765 43210',
-    val_phone_ok: '✓ નંબર સાચો છે.',
-    val_phone_err: 'કૃપા કરી 10 અંકનો ભારતીય નંબર દાખલ કરો.',
     q_paradigm: 'તમે સ્વાસ્થ્ય માટે કઈ approach પસંદ કરો છો?',
-    h_paradigm: 'અમે તે પ્રમાણે care team બનાવીશું.',
+    h_paradigm: 'અમે તે પ્રમાણે health team બનાવીશું.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, Tests, Prescription' },
       { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, English દવા વિના' },
       { val: 'open', icon: '⚖️', main: 'બંને ચાલે', sub: 'મારા જવાબો પ્રમાણે સાચો track પસંદ કરો' },
     ],
+    lbl_name_field: 'તમારું નામ',
+    placeholder_name: 'તમારું નામ લખો',
+    val_name_ok: '✓ સારું!',
+    val_name_err: 'ઓછામાં ઓછા 2 અક્ષર જોઈએ.',
+    lbl_phone_field: 'તમારો WhatsApp નંબર',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ નંબર સાચો છે.',
+    val_phone_err: 'કૃપા કરી 10 અંકનો ભારતીય નંબર દાખલ કરો.',
+    phone_safety_note: 'તમારો નંબર સુરક્ષિત છે, કોઈની સાથે share નથી થતો.',
     consent_note: 'આગળ વધવાથી તમે JeevanKey ની Terms of Service સ્વીકારો છો.',
-    btn_continue: 'આગળ વધો',
-    btn_connect: 'Care Team સાથે જોડો',
+    btn_connect: 'Health Team સાથે જોડો',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'તમારો profile match થઈ ગયો. WhatsApp Chat ખોલો.',
     lbl_name: 'નામ',
@@ -490,31 +479,28 @@ const T = {
     wa_btn: 'WhatsApp Chat ખોલો →',
     disclaimer: 'JeevanKey health coordination service છે. Emergency માટે 112 પર call કરો.',
     wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, maine onboarding complete ki. Terms of Service manzoor hai.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nMujhe coordinator aur care team se milayein.`,
+      `Hello JeevanKey, maine onboarding complete ki. Terms of Service manzoor hai.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nMujhe health manager aur health team se milayein.`,
   },
   mr: {
     brand_tag: 'Onboarding',
-    prog_step: (n, t) => `पायरी ${n} / ${t}`,
-    q_name: 'तुमचं नाव काय आहे?',
-    h_name: 'तुम्हाला आवडणारं नाव लिहा.',
-    placeholder_name: 'तुमचं नाव लिहा',
-    val_name_ok: '✓ छान!',
-    val_name_err: 'किमान 2 अक्षरे हवीत.',
-    q_phone: (name) => `${name}, तुमचा WhatsApp नंबर काय आहे?`,
-    h_phone: 'तुमचा Coordinator येथेच संपर्क करेल.',
-    placeholder_phone: '98765 43210',
-    val_phone_ok: '✓ नंबर बरोबर आहे.',
-    val_phone_err: 'कृपया 10 अंकी भारतीय नंबर टाका.',
     q_paradigm: 'तुम्हाला कोणता health approach आवडतो?',
-    h_paradigm: 'त्यानुसार आम्ही तुमची care team बनवू.',
+    h_paradigm: 'त्यानुसार आम्ही तुमची health team बनवू.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, Tests, Prescription' },
       { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, इंग्रजी औषधांशिवाय' },
       { val: 'open', icon: '⚖️', main: 'दोन्ही चालेल', sub: 'माझ्या उत्तरांवरून योग्य track निवडा' },
     ],
+    lbl_name_field: 'तुमचं नाव',
+    placeholder_name: 'तुमचं नाव लिहा',
+    val_name_ok: '✓ छान!',
+    val_name_err: 'किमान 2 अक्षरे हवीत.',
+    lbl_phone_field: 'तुमचा WhatsApp नंबर',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ नंबर बरोबर आहे.',
+    val_phone_err: 'कृपया 10 अंकी भारतीय नंबर टाका.',
+    phone_safety_note: 'तुमचा नंबर सुरक्षित आहे, कोणाशीही share होत नाही.',
     consent_note: 'पुढे गेल्यावर तुम्ही JeevanKey च्या Terms of Service ला सहमती देता.',
-    btn_continue: 'पुढे जा',
-    btn_connect: 'Care Team शी जोडा',
+    btn_connect: 'Health Team शी जोडा',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'तुमचा profile जुळला. WhatsApp Chat उघडा.',
     lbl_name: 'नाव',
@@ -523,31 +509,28 @@ const T = {
     wa_btn: 'WhatsApp Chat उघडा →',
     disclaimer: 'JeevanKey एक health coordination service आहे. Emergency साठी 112 वर call करा.',
     wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, maine onboarding complete ki. Terms of Service manzoor hai.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nMujhe coordinator aur care team se milayein.`,
+      `Hello JeevanKey, maine onboarding complete ki. Terms of Service manzoor hai.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nMujhe health manager aur health team se milayein.`,
   },
   bn: {
     brand_tag: 'Onboarding',
-    prog_step: (n, t) => `ধাপ ${n} / ${t}`,
-    q_name: 'আপনার নাম কী?',
-    h_name: 'আপনার পছন্দের নাম লিখুন।',
-    placeholder_name: 'আপনার নাম লিখুন',
-    val_name_ok: '✓ চমৎকার!',
-    val_name_err: 'কমপক্ষে ২টি অক্ষর দরকার।',
-    q_phone: (name) => `${name}, আপনার WhatsApp নম্বর কী?`,
-    h_phone: 'আপনার Coordinator এখানেই যোগাযোগ করবে।',
-    placeholder_phone: '98765 43210',
-    val_phone_ok: '✓ নম্বর সঠিক।',
-    val_phone_err: 'অনুগ্রহ করে ১০ সংখ্যার ভারতীয় নম্বর দিন।',
     q_paradigm: 'আপনি স্বাস্থ্যের জন্য কোন approach পছন্দ করেন?',
-    h_paradigm: 'আমরা সেই অনুযায়ী আপনার care team তৈরি করব।',
+    h_paradigm: 'আমরা সেই অনুযায়ী আপনার health team তৈরি করব।',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'ডাক্তার, পরীক্ষা, প্রেসক্রিপশন' },
       { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, ইংরেজি ওষুধ ছাড়া' },
       { val: 'open', icon: '⚖️', main: 'দুটোই চলবে', sub: 'আমার উত্তর দেখে সঠিক track বেছে নিন' },
     ],
+    lbl_name_field: 'আপনার নাম',
+    placeholder_name: 'আপনার নাম লিখুন',
+    val_name_ok: '✓ চমৎকার!',
+    val_name_err: 'কমপক্ষে ২টি অক্ষর দরকার।',
+    lbl_phone_field: 'আপনার WhatsApp নম্বর',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ নম্বর সঠিক।',
+    val_phone_err: 'অনুগ্রহ করে ১০ সংখ্যার ভারতীয় নম্বর দিন।',
+    phone_safety_note: 'আপনার নম্বর নিরাপদ, কারো সাথে share করা হয় না।',
     consent_note: 'এগিয়ে গেলে আপনি JeevanKey-এর Terms of Service-এ সম্মত হচ্ছেন।',
-    btn_continue: 'এগিয়ে যান',
-    btn_connect: 'Care Team-এ যুক্ত হন',
+    btn_connect: 'Health Team-এ যুক্ত হন',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'আপনার profile মিলে গেছে। WhatsApp Chat খুলুন।',
     lbl_name: 'নাম',
@@ -556,31 +539,28 @@ const T = {
     wa_btn: 'WhatsApp Chat খুলুন →',
     disclaimer: 'JeevanKey একটি health coordination service। জরুরি অবস্থায় 112-তে call করুন।',
     wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, onboarding complete korlam. Terms of Service mene niyechi.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nDaya kore coordinator o care team er sathe jog korun.`,
+      `Hello JeevanKey, onboarding complete korlam. Terms of Service mene niyechi.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nDaya kore health manager o health team er sathe jog korun.`,
   },
   ta: {
     brand_tag: 'Onboarding',
-    prog_step: (n, t) => `படி ${n} / ${t}`,
-    q_name: 'உங்கள் பெயர் என்ன?',
-    h_name: 'நீங்கள் விரும்பும் பெயரை எழுதுங்கள்.',
-    placeholder_name: 'உங்கள் பெயர் எழுதுங்கள்',
-    val_name_ok: '✓ நல்லது!',
-    val_name_err: 'குறைந்தது 2 எழுத்துகள் தேவை.',
-    q_phone: (name) => `${name}, உங்கள் WhatsApp எண் என்ன?`,
-    h_phone: 'உங்கள் Coordinator இங்கே தொடர்பு கொள்வார்.',
-    placeholder_phone: '98765 43210',
-    val_phone_ok: '✓ எண் சரி.',
-    val_phone_err: '10 இலக்க இந்திய எண்ணை உள்ளிடுங்கள்.',
     q_paradigm: 'உங்கள் ஆரோக்கியத்திற்கு எந்த approach விரும்புகிறீர்கள்?',
-    h_paradigm: 'அதற்கு ஏற்ப care team அமைப்போம்.',
+    h_paradigm: 'அதற்கு ஏற்ப health team அமைப்போம்.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, பரிசோதனை, prescription' },
       { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, ஆங்கில மருந்து இல்லாமல்' },
       { val: 'open', icon: '⚖️', main: 'இரண்டும் சரி', sub: 'என் பதில்களை வைத்து சரியான track தேர்வு செய்யுங்கள்' },
     ],
+    lbl_name_field: 'உங்கள் பெயர்',
+    placeholder_name: 'உங்கள் பெயர் எழுதுங்கள்',
+    val_name_ok: '✓ நல்லது!',
+    val_name_err: 'குறைந்தது 2 எழுத்துகள் தேவை.',
+    lbl_phone_field: 'உங்கள் WhatsApp எண்',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ எண் சரி.',
+    val_phone_err: '10 இலக்க இந்திய எண்ணை உள்ளிடுங்கள்.',
+    phone_safety_note: 'உங்கள் எண் பாதுகாப்பானது, யாருடனும் share செய்யப்படாது.',
     consent_note: 'தொடர்வதன் மூலம் JeevanKey Terms of Service ஐ ஒப்புக்கொள்கிறீர்கள்.',
-    btn_continue: 'தொடரு',
-    btn_connect: 'Care Team இணை',
+    btn_connect: 'Health Team இணை',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'உங்கள் profile பொருந்தியது. WhatsApp Chat திறங்கள்.',
     lbl_name: 'பெயர்',
@@ -589,31 +569,28 @@ const T = {
     wa_btn: 'WhatsApp Chat திறக்க →',
     disclaimer: 'JeevanKey ஒரு health coordination சேவை. அவசரநிலையில் 112 அழைக்கவும்.',
     wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, onboarding complete aaichu. Terms of Service accept panren.\n\nPeyar: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nEn coordinator um care team um kitta connect pannunga.`,
+      `Hello JeevanKey, onboarding complete aaichu. Terms of Service accept panren.\n\nPeyar: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nEn health manager um health team um kitta connect pannunga.`,
   },
   te: {
     brand_tag: 'Onboarding',
-    prog_step: (n, t) => `దశ ${n} / ${t}`,
-    q_name: 'మీ పేరు ఏమిటి?',
-    h_name: 'మీకు నచ్చిన పేరు రాయండి.',
-    placeholder_name: 'మీ పేరు రాయండి',
-    val_name_ok: '✓ బాగుంది!',
-    val_name_err: 'కనీసం 2 అక్షరాలు అవసరం.',
-    q_phone: (name) => `${name}, మీ WhatsApp నంబర్ ఏమిటి?`,
-    h_phone: 'మీ Coordinator ఇక్కడే సంప్రదిస్తారు.',
-    placeholder_phone: '98765 43210',
-    val_phone_ok: '✓ నంబర్ సరైనది.',
-    val_phone_err: '10 అంకెల భారతీయ నంబర్ నమోదు చేయండి.',
     q_paradigm: 'మీరు ఆరోగ్యం కోసం ఏ approach ఇష్టపడతారు?',
-    h_paradigm: 'దాని ప్రకారం care team నిర్మిస్తాము.',
+    h_paradigm: 'దాని ప్రకారం health team నిర్మిస్తాము.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, పరీక్షలు, Prescription' },
       { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, English మందులు లేకుండా' },
       { val: 'open', icon: '⚖️', main: 'రెండూ సరే', sub: 'నా జవాబుల ఆధారంగా సరైన track ఎంచుకోండి' },
     ],
+    lbl_name_field: 'మీ పేరు',
+    placeholder_name: 'మీ పేరు రాయండి',
+    val_name_ok: '✓ బాగుంది!',
+    val_name_err: 'కనీసం 2 అక్షరాలు అవసరం.',
+    lbl_phone_field: 'మీ WhatsApp నంబర్',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ నంబర్ సరైనది.',
+    val_phone_err: '10 అంకెల భారతీయ నంబర్ నమోదు చేయండి.',
+    phone_safety_note: 'మీ నంబర్ సురక్షితం, ఎవరితోనూ share చేయబడదు.',
     consent_note: 'కొనసాగించడం ద్వారా మీరు JeevanKey Terms of Service కు అంగీకరిస్తున్నారు.',
-    btn_continue: 'కొనసాగించు',
-    btn_connect: 'Care Team తో కలుపు',
+    btn_connect: 'Health Team తో కలుపు',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'మీ profile match అయింది. WhatsApp Chat తెరవండి.',
     lbl_name: 'పేరు',
@@ -622,31 +599,28 @@ const T = {
     wa_btn: 'WhatsApp Chat తెరవండి →',
     disclaimer: 'JeevanKey ఒక health coordination service. అత్యవసర పరిస్థితిలో 112 కి call చేయండి.',
     wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, onboarding complete chesanu. Terms of Service accept chesanu.\n\nPeru: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nNanu coordinator mattu care team tho connect cheyyandi.`,
+      `Hello JeevanKey, onboarding complete chesanu. Terms of Service accept chesanu.\n\nPeru: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nNanu health manager mattu health team tho connect cheyyandi.`,
   },
   kn: {
     brand_tag: 'Onboarding',
-    prog_step: (n, t) => `ಹಂತ ${n} / ${t}`,
-    q_name: 'ನಿಮ್ಮ ಹೆಸರೇನು?',
-    h_name: 'ನೀವು ಬಯಸುವ ಹೆಸರು ಬರೆಯಿರಿ.',
-    placeholder_name: 'ನಿಮ್ಮ ಹೆಸರು ಬರೆಯಿರಿ',
-    val_name_ok: '✓ ಚೆನ್ನಾಗಿದೆ!',
-    val_name_err: 'ಕನಿಷ್ಠ 2 ಅಕ್ಷರಗಳು ಬೇಕು.',
-    q_phone: (name) => `${name}, ನಿಮ್ಮ WhatsApp ಸಂಖ್ಯೆ ಏನು?`,
-    h_phone: 'ನಿಮ್ಮ Coordinator ಇಲ್ಲಿ ಸಂಪರ್ಕಿಸುತ್ತಾರೆ.',
-    placeholder_phone: '98765 43210',
-    val_phone_ok: '✓ ಸಂಖ್ಯೆ ಸರಿಯಾಗಿದೆ.',
-    val_phone_err: '10 ಅಂಕಿಯ ಭಾರತೀಯ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ.',
     q_paradigm: 'ನಿಮ್ಮ ಆರೋಗ್ಯಕ್ಕೆ ಯಾವ approach ಇಷ್ಟ?',
-    h_paradigm: 'ಅದಕ್ಕೆ ತಕ್ಕಂತೆ care team ರಚಿಸುತ್ತೇವೆ.',
+    h_paradigm: 'ಅದಕ್ಕೆ ತಕ್ಕಂತೆ health team ರಚಿಸುತ್ತೇವೆ.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, ಪರೀಕ್ಷೆ, Prescription' },
       { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, English ಔಷಧಿ ಇಲ್ಲದೆ' },
       { val: 'open', icon: '⚖️', main: 'ಎರಡೂ ಸರಿ', sub: 'ನನ್ನ ಉತ್ತರಗಳ ಆಧಾರದಲ್ಲಿ ಸರಿಯಾದ track ಆಯ್ಕೆ ಮಾಡಿ' },
     ],
+    lbl_name_field: 'ನಿಮ್ಮ ಹೆಸರು',
+    placeholder_name: 'ನಿಮ್ಮ ಹೆಸರು ಬರೆಯಿರಿ',
+    val_name_ok: '✓ ಚೆನ್ನಾಗಿದೆ!',
+    val_name_err: 'ಕನಿಷ್ಠ 2 ಅಕ್ಷರಗಳು ಬೇಕು.',
+    lbl_phone_field: 'ನಿಮ್ಮ WhatsApp ಸಂಖ್ಯೆ',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ ಸಂಖ್ಯೆ ಸರಿಯಾಗಿದೆ.',
+    val_phone_err: '10 ಅಂಕಿಯ ಭಾರತೀಯ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ.',
+    phone_safety_note: 'ನಿಮ್ಮ ಸಂಖ್ಯೆ ಸುರಕ್ಷಿತವಾಗಿದೆ, ಯಾರೊಂದಿಗೂ share ಆಗುವುದಿಲ್ಲ.',
     consent_note: 'ಮುಂದುವರಿಯುವ ಮೂಲಕ ನೀವು JeevanKey Terms of Service ಗೆ ಒಪ್ಪಿಗೆ ನೀಡುತ್ತೀರಿ.',
-    btn_continue: 'ಮುಂದುವರಿಯಿರಿ',
-    btn_connect: 'Care Team ಜೊತೆ ಸೇರಿಸಿ',
+    btn_connect: 'Health Team ಜೊತೆ ಸೇರಿಸಿ',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'ನಿಮ್ಮ profile match ಆಯಿತು. WhatsApp Chat ತೆರೆಯಿರಿ.',
     lbl_name: 'ಹೆಸರು',
@@ -655,31 +629,28 @@ const T = {
     wa_btn: 'WhatsApp Chat ತೆರೆಯಿರಿ →',
     disclaimer: 'JeevanKey ಒಂದು health coordination service. ತುರ್ತುಸ್ಥಿತಿಯಲ್ಲಿ 112 ಗೆ call ಮಾಡಿ.',
     wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, onboarding complete maadide. Terms of Service accept maadide.\n\nHesaru: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nNannu coordinator mattu care team jote connect maadi.`,
+      `Hello JeevanKey, onboarding complete maadide. Terms of Service accept maadide.\n\nHesaru: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nNannu health manager mattu health team jote connect maadi.`,
   },
   ml: {
     brand_tag: 'Onboarding',
-    prog_step: (n, t) => `ഘട്ടം ${n} / ${t}`,
-    q_name: 'നിങ്ങളുടെ പേര് എന്താണ്?',
-    h_name: 'നിങ്ങൾ ഇഷ്ടപ്പെടുന്ന പേര് എഴുതുക.',
-    placeholder_name: 'നിങ്ങളുടെ പേര് എഴുതുക',
-    val_name_ok: '✓ നന്ന്!',
-    val_name_err: 'കുറഞ്ഞത് 2 അക്ഷരങ്ങൾ ആവശ്യമാണ്.',
-    q_phone: (name) => `${name}, നിങ്ങളുടെ WhatsApp നമ്പർ എന്താണ്?`,
-    h_phone: 'നിങ്ങളുടെ Coordinator ഇവിടെ ബന്ധപ്പെടും.',
-    placeholder_phone: '98765 43210',
-    val_phone_ok: '✓ നമ്പർ ശരിയാണ്.',
-    val_phone_err: 'ദയവായി 10 അക്ക ഇന്ത്യൻ നമ്പർ നൽകുക.',
     q_paradigm: 'ആരോഗ്യത്തിനായി ഏത് approach ഇഷ്ടപ്പെടുന്നു?',
-    h_paradigm: 'അതനുസരിച്ച് care team ഉണ്ടാക്കും.',
+    h_paradigm: 'അതനുസരിച്ച് health team ഉണ്ടാക്കും.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy / English Medicine', sub: 'Doctor, പരിശോധന, Prescription' },
       { val: 'alternative', icon: '🌿', main: 'Ayurvedic / Homeopathy', sub: 'Root-cause, ഇംഗ്ലീഷ് മരുന്ന് ഇല്ലാതെ' },
       { val: 'open', icon: '⚖️', main: 'രണ്ടും ശരി', sub: 'എന്റെ ഉത്തരങ്ങൾ നോക്കി ശരിയായ track തിരഞ്ഞെടുക്കൂ' },
     ],
+    lbl_name_field: 'നിങ്ങളുടെ പേര്',
+    placeholder_name: 'നിങ്ങളുടെ പേര് എഴുതുക',
+    val_name_ok: '✓ നന്ന്!',
+    val_name_err: 'കുറഞ്ഞത് 2 അക്ഷരങ്ങൾ ആവശ്യമാണ്.',
+    lbl_phone_field: 'നിങ്ങളുടെ WhatsApp നമ്പർ',
+    placeholder_phone: '98765 43210',
+    val_phone_ok: '✓ നമ്പർ ശരിയാണ്.',
+    val_phone_err: 'ദയവായി 10 അക്ക ഇന്ത്യൻ നമ്പർ നൽകുക.',
+    phone_safety_note: 'നിങ്ങളുടെ നമ്പർ സുരക്ഷിതമാണ്, ആരുമായും share ചെയ്യില്ല.',
     consent_note: 'തുടരുന്നതിലൂടെ JeevanKey Terms of Service അംഗീകരിക്കുന്നു.',
-    btn_continue: 'തുടരുക',
-    btn_connect: 'Care Team-ൽ ചേർക്കൂ',
+    btn_connect: 'Health Team-ൽ ചേർക്കൂ',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'നിങ്ങളുടെ profile match ആയി. WhatsApp Chat തുറക്കൂ.',
     lbl_name: 'പേര്',
@@ -688,36 +659,14 @@ const T = {
     wa_btn: 'WhatsApp Chat തുറക്കൂ →',
     disclaimer: 'JeevanKey ഒരു health coordination service ആണ്. അടിയന്തര സ്ഥിതിക്ക് 112 വിളിക്കുക.',
     wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, onboarding complete cheshu. Terms of Service accept cheshu.\n\nPer: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nEne coordinator um care team umayi connect cheyyuka.`,
+      `Hello JeevanKey, onboarding complete cheshu. Terms of Service accept cheshu.\n\nPer: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nEne health manager um health team umayi connect cheyyuka.`,
   },
 };
 
 /* ══════════════════════════════════════════════════
    HELPERS
    ══════════════════════════════════════════════════ */
-const TOTAL_STEPS = 3;
-
 function t() { return T[lang] || T.hi; }
-
-function setProgress(step) {
-  const pct = Math.round(((step - 1) / TOTAL_STEPS) * 100);
-  document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-text').textContent = t().prog_step(step, TOTAL_STEPS);
-  document.getElementById('prog-pct').textContent = pct + '%';
-}
-
-function goTo(step) {
-  const from = document.getElementById('step-' + currentStep);
-  if (from) { from.classList.remove('active'); }
-  currentStep = step;
-  const to = document.getElementById('step-' + step);
-  if (to) {
-    to.classList.add('active');
-    setProgress(step);
-    const inp = to.querySelector('input');
-    if (inp) setTimeout(() => inp.focus(), 80);
-  }
-}
 
 /* ══════════════════════════════════════════════════
    LANGUAGE SWITCH
@@ -725,36 +674,30 @@ function goTo(step) {
 function setLang(l) {
   lang = l;
   document.getElementById('brand-tag').textContent = t().brand_tag;
-  // Step 1
-  document.getElementById('q-name').textContent = t().q_name;
-  document.getElementById('h-name').textContent = t().h_name;
-  document.getElementById('f-name').placeholder = t().placeholder_name;
-  document.getElementById('btn1-label').textContent = t().btn_continue;
-  // Step 2
-  document.getElementById('q-phone').textContent = t().q_phone(D.name || '…');
-  document.getElementById('h-phone').textContent = t().h_phone;
-  document.getElementById('f-phone').placeholder = t().placeholder_phone;
-  document.getElementById('btn2-label').textContent = t().btn_continue;
-  // Step 3
+
   document.getElementById('q-paradigm').textContent = t().q_paradigm;
   document.getElementById('h-paradigm').textContent = t().h_paradigm;
-  document.getElementById('consent-note').textContent = t().consent_note;
-  document.getElementById('btn3-label').textContent = t().btn_connect;
   renderParadigmOpts();
-  // Progress
-  setProgress(currentStep);
+
+  document.getElementById('lbl-name-field').textContent = t().lbl_name_field;
+  document.getElementById('f-name').placeholder = t().placeholder_name;
+
+  document.getElementById('lbl-phone-field').textContent = t().lbl_phone_field;
+  document.getElementById('f-phone').placeholder = t().placeholder_phone;
+  document.getElementById('phone-safety-note').textContent = t().phone_safety_note;
+
+  document.getElementById('consent-note').textContent = t().consent_note;
+  document.getElementById('btn-submit-label').textContent = t().btn_connect;
 }
 
 /* ══════════════════════════════════════════════════
-   STEP 1 — NAME
+   FIELD VALIDATION — NAME
    ══════════════════════════════════════════════════ */
 function onName(el) {
   const v = el.value.trim();
   D.name = v;
-  const btn = document.getElementById('btn-1');
   const msg = document.getElementById('val-name');
   if (v.length >= 2) {
-    btn.classList.add('on');
     el.classList.add('valid');
     msg.textContent = t().val_name_ok;
     msg.className = 'val-msg show';
@@ -763,27 +706,25 @@ function onName(el) {
       _gaEvent('jk_onboarding_step', {
         step: 'name_entered',
         event_category: 'onboarding_funnel',
-        event_label: 'step_1_name'
+        event_label: 'step_name'
       });
     }
   } else {
-    btn.classList.remove('on');
     el.classList.remove('valid');
     msg.className = 'val-msg';
   }
+  checkAllValid();
 }
 
 /* ══════════════════════════════════════════════════
-   STEP 2 — PHONE
+   FIELD VALIDATION — PHONE
    ══════════════════════════════════════════════════ */
 function onPhone(el) {
   el.value = el.value.replace(/\D/g, '').slice(0, 10);
   const v = el.value;
   D.phone = v;
-  const btn = document.getElementById('btn-2');
   const msg = document.getElementById('val-phone');
   if (v.length === 10 && /^[6-9]/.test(v)) {
-    btn.classList.add('on');
     el.classList.add('valid');
     msg.textContent = t().val_phone_ok;
     msg.className = 'val-msg show';
@@ -792,34 +733,29 @@ function onPhone(el) {
       _gaEvent('jk_onboarding_step', {
         step: 'phone_entered',
         event_category: 'onboarding_funnel',
-        event_label: 'step_2_phone'
+        event_label: 'step_phone'
       });
     }
   } else if (v.length === 10) {
-    btn.classList.remove('on');
     el.classList.remove('valid');
     msg.textContent = t().val_phone_err;
     msg.className = 'val-msg show err';
   } else {
-    btn.classList.remove('on');
     el.classList.remove('valid');
     msg.className = 'val-msg';
   }
-}
-
-function tryPhone() {
-  if (D.phone.length === 10 && /^[6-9]/.test(D.phone)) goTo(3);
+  checkAllValid();
 }
 
 /* ══════════════════════════════════════════════════
-   STEP 3 — PARADIGM (Q0)
+   PARADIGM SELECTION
    ══════════════════════════════════════════════════ */
 function renderParadigmOpts() {
   const container = document.getElementById('paradigm-opts');
   const opts = t().paradigm_opts;
   container.innerHTML = opts.map(o => `
     <button class="opt${D.paradigm === o.val ? ' sel' : ''}"
-      onclick="pickParadigm(this,'${o.val}')">
+      onclick="pickParadigm(this,'${o.val}')" type="button">
       <span class="opt-icon">${o.icon}</span>
       <span class="opt-body">
         <span class="opt-main">${o.main}</span>
@@ -827,37 +763,53 @@ function renderParadigmOpts() {
       </span>
     </button>
   `).join('');
-  // Update Q2 question with current name
-  document.getElementById('q-phone').textContent = t().q_phone(D.name || '…');
 }
 
 function pickParadigm(el, val) {
   D.paradigm = val;
-  // Find label from current lang opts
   const opt = t().paradigm_opts.find(o => o.val === val);
   D.paradigmLabel = opt ? opt.main : val;
   document.querySelectorAll('#paradigm-opts .opt').forEach(b => b.classList.remove('sel'));
   el.classList.add('sel');
-  document.getElementById('btn-3').classList.add('on');
   if (!_stepFired.paradigm) {
     _stepFired.paradigm = true;
     _gaEvent('jk_onboarding_step', {
       step: 'paradigm_selected',
       paradigm: val,
       event_category: 'onboarding_funnel',
-      event_label: 'step_3_paradigm'
+      event_label: 'step_paradigm'
     });
   }
+  checkAllValid();
+}
+
+/* ══════════════════════════════════════════════════
+   COMBINED VALIDATION — all three fields must be valid
+   ══════════════════════════════════════════════════ */
+function checkAllValid() {
+  const nameOk    = D.name.length >= 2;
+  const phoneOk   = D.phone.length === 10 && /^[6-9]/.test(D.phone);
+  const paradigmOk = !!D.paradigm;
+  const btn = document.getElementById('btn-submit');
+  if (nameOk && phoneOk && paradigmOk) {
+    btn.classList.add('on');
+  } else {
+    btn.classList.remove('on');
+  }
+}
+
+function trySubmit() {
+  const nameOk    = D.name.length >= 2;
+  const phoneOk   = D.phone.length === 10 && /^[6-9]/.test(D.phone);
+  const paradigmOk = !!D.paradigm;
+  if (nameOk && phoneOk && paradigmOk) submit();
 }
 
 /* ══════════════════════════════════════════════════
    SUBMIT → DONE SCREEN
    ══════════════════════════════════════════════════ */
 function submit() {
-  if (!D.paradigm) return;
-
-  // Hide progress
-  document.getElementById('progress-wrap').style.display = 'none';
+  if (!D.paradigm || D.name.length < 2 || !(D.phone.length === 10 && /^[6-9]/.test(D.phone))) return;
 
   // Populate done screen
   document.getElementById('done-h').textContent = t().done_h(D.name);
@@ -876,8 +828,7 @@ function submit() {
   document.getElementById('done-wa-btn').href = 'https://wa.me/919760015878?text=' + msg;
 
   // Transition
-  const from = document.getElementById('step-' + currentStep);
-  if (from) from.classList.remove('active');
+  document.getElementById('step-form').classList.remove('active');
   document.getElementById('step-done').classList.add('active');
 
   // Google Sheets relay + GA4 lead event
@@ -964,7 +915,6 @@ window.addEventListener('DOMContentLoaded', () => {
   // Default to Hindi
   document.getElementById('lang-select').value = 'hi';
   setLang('hi');
-  setProgress(1);
   // Intent from URL param (from ad campaigns)
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('intent')) D.intent = urlParams.get('intent').trim().toLowerCase();
