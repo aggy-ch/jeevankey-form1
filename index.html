@@ -240,55 +240,19 @@ body {
 .next-arrow { transition: transform .2s; }
 .next-btn:hover .next-arrow { transform: translateX(3px); }
 
-/* ── Summary (done screen) ── */
-#step-done { text-align: center; }
-.done-icon { font-size: 42px; margin-bottom: 14px; }
-.done-h { font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
-.done-sub { font-size: 13.5px; color: var(--ink-3); line-height: 1.6; margin-bottom: 20px; }
-
-.summary {
-  background: #f8fafc;
-  border: 1.5px solid #edf2f5;
-  border-radius: 8px;
-  padding: 14px 16px;
-  margin-bottom: 20px;
-  text-align: left;
-}
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 7px 0;
-  font-size: 13.5px;
-  border-bottom: 1px solid #edf2f5;
-  gap: 12px;
-}
-.summary-row:last-child { border-bottom: none; }
-.summary-key { color: var(--ink-3); flex-shrink: 0; }
-.summary-val { color: var(--ink); font-weight: 600; text-align: right; }
-
-.done-wa {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  padding: 15px 24px;
+.next-btn.wa-style {
   background: var(--wa);
-  color: var(--white);
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background .2s;
+  gap: 9px;
 }
-.done-wa:hover { background: var(--wa-d); }
+.next-btn.wa-style:hover { background: var(--wa-d); }
+.next-btn.wa-style svg { flex-shrink: 0; }
 
 .disclaimer {
   font-size: 10.5px;
   color: var(--ink-4);
   line-height: 1.5;
   margin-top: 18px;
+  text-align: center;
 }
 
 @media (max-width: 480px) {
@@ -348,7 +312,7 @@ body {
           <input class="field-input phone-input" type="tel" id="f-phone"
             maxlength="10" inputmode="numeric" pattern="[0-9]*"
             oninput="onPhone(this)"
-            onkeydown="if(event.key==='Enter') trySubmit()">
+            onkeydown="if(event.key==='Enter'){ document.getElementById('btn-submit').click(); }">
         </div>
         <div class="val-msg" id="val-phone"></div>
         <div class="phone-safety-note" id="phone-safety-note"></div>
@@ -357,33 +321,13 @@ body {
 
     <p class="consent-note" id="consent-note"></p>
 
-    <button class="next-btn" id="btn-submit" onclick="submit()">
-      <span id="btn-submit-label"></span> <span class="next-arrow">→</span>
-    </button>
-  </div>
-
-  <!-- ══ DONE ══ -->
-  <div class="step" id="step-done">
-    <div class="done-icon">🚀</div>
-    <h2 class="done-h" id="done-h"></h2>
-    <p class="done-sub" id="done-sub"></p>
-    <div class="summary">
-      <div class="summary-row">
-        <span class="summary-key" id="lbl-name"></span>
-        <span class="summary-val" id="s-name"></span>
-      </div>
-      <div class="summary-row">
-        <span class="summary-key" id="lbl-wa"></span>
-        <span class="summary-val" id="s-phone"></span>
-      </div>
-      <div class="summary-row">
-        <span class="summary-key" id="lbl-track"></span>
-        <span class="summary-val" id="s-paradigm"></span>
-      </div>
-    </div>
-    <a class="done-wa" id="done-wa-btn" href="#" target="_blank" onclick="onWaClick()">
-      💬 <span id="wa-btn-label"></span>
+    <a class="next-btn wa-style" id="btn-submit" href="#" target="_blank" onclick="onFinalClick(event)">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm4.95 13.5c-.207.583-1.215 1.114-1.664 1.154-.45.04-.872.207-2.94-.614-2.492-.996-4.083-3.542-4.208-3.708-.124-.166-1.017-1.354-1.017-2.583 0-1.23.644-1.833.873-2.083.228-.25.497-.312.663-.312h.478c.152 0 .36-.057.563.43.207.497.705 1.716.767 1.84.062.125.104.27.02.436-.082.165-.124.27-.248.415-.124.145-.26.324-.373.435-.124.124-.253.258-.109.506.145.248.644 1.063 1.382 1.722.95.847 1.75 1.108 1.998 1.233.248.124.394.104.54-.062.145-.166.622-.726.788-.977.165-.25.33-.207.56-.124.228.083 1.45.684 1.7.808.248.124.414.187.476.29.062.104.062.6-.145 1.183z"/>
+      </svg>
+      <span id="btn-submit-label"></span>
     </a>
+
     <p class="disclaimer" id="disclaimer-text"></p>
   </div>
 
@@ -406,7 +350,7 @@ const T = {
   hi: {
     brand_tag: 'Onboarding',
     q_paradigm: 'आप अपनी सेहत के लिए कौन सा approach पसंद करते हैं?',
-    h_paradigm: 'हम इसी के अनुसार आपकी health team बनाएंगे।',
+    h_paradigm: 'हम इसी के अनुसार आपकी health team बनाएंगे — WhatsApp पर बात करने के बाद।',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
       { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
@@ -423,7 +367,7 @@ const T = {
     val_phone_err: 'कृपया सही 10 अंकों का भारतीय नंबर दर्ज करें।',
     phone_safety_note: 'आपका number सुरक्षित है, किसी से share नहीं होता।',
     consent_note: 'आगे बढ़ने पर आप JeevanKey की Terms of Service से सहमत होते हैं और WhatsApp/SMS पर health coordination के लिए अनुमति देते हैं।',
-    btn_connect: 'मेरी Health Team से जोड़ें',
+    btn_connect: 'WhatsApp Us',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'आपका profile match हो गया। नीचे WhatsApp Chat खोलें।',
     lbl_name: 'नाम',
@@ -437,7 +381,7 @@ const T = {
   en: {
     brand_tag: 'Onboarding',
     q_paradigm: 'Which approach do you prefer for your health?',
-    h_paradigm: 'We will build your health team accordingly.',
+    h_paradigm: 'We will build your health team accordingly — after we connect on WhatsApp.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
       { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
@@ -454,7 +398,7 @@ const T = {
     val_phone_err: 'Please enter a valid 10-digit Indian mobile number.',
     phone_safety_note: 'Your number is safe. We never share it with anyone.',
     consent_note: 'By continuing you agree to JeevanKey\'s Terms of Service and authorise contact via WhatsApp/SMS for health coordination.',
-    btn_connect: 'Connect My Health Team',
+    btn_connect: 'WhatsApp Us',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'Your profile has been matched. Open WhatsApp Chat below.',
     lbl_name: 'Name',
@@ -468,7 +412,7 @@ const T = {
   gu: {
     brand_tag: 'Onboarding',
     q_paradigm: 'તમે સ્વાસ્થ્ય માટે કઈ approach પસંદ કરો છો?',
-    h_paradigm: 'અમે તે પ્રમાણે health team બનાવીશું.',
+    h_paradigm: 'અમે તે પ્રમાણે health team બનાવીશું — WhatsApp પર વાત કર્યા પછી.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
       { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
@@ -485,7 +429,7 @@ const T = {
     val_phone_err: 'કૃપા કરી 10 અંકનો ભારતીય નંબર દાખલ કરો.',
     phone_safety_note: 'તમારો નંબર સુરક્ષિત છે, કોઈની સાથે share નથી થતો.',
     consent_note: 'આગળ વધવાથી તમે JeevanKey ની Terms of Service સ્વીકારો છો.',
-    btn_connect: 'Health Team સાથે જોડો',
+    btn_connect: 'WhatsApp Us',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'તમારો profile match થઈ ગયો. WhatsApp Chat ખોલો.',
     lbl_name: 'નામ',
@@ -499,7 +443,7 @@ const T = {
   mr: {
     brand_tag: 'Onboarding',
     q_paradigm: 'तुम्हाला कोणता health approach आवडतो?',
-    h_paradigm: 'त्यानुसार आम्ही तुमची health team बनवू.',
+    h_paradigm: 'त्यानुसार आम्ही तुमची health team बनवू — WhatsApp वर बोलल्यानंतर.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
       { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
@@ -516,7 +460,7 @@ const T = {
     val_phone_err: 'कृपया 10 अंकी भारतीय नंबर टाका.',
     phone_safety_note: 'तुमचा नंबर सुरक्षित आहे, कोणाशीही share होत नाही.',
     consent_note: 'पुढे गेल्यावर तुम्ही JeevanKey च्या Terms of Service ला सहमती देता.',
-    btn_connect: 'Health Team शी जोडा',
+    btn_connect: 'WhatsApp Us',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'तुमचा profile जुळला. WhatsApp Chat उघडा.',
     lbl_name: 'नाव',
@@ -530,7 +474,7 @@ const T = {
   bn: {
     brand_tag: 'Onboarding',
     q_paradigm: 'আপনি স্বাস্থ্যের জন্য কোন approach পছন্দ করেন?',
-    h_paradigm: 'আমরা সেই অনুযায়ী আপনার health team তৈরি করব।',
+    h_paradigm: 'আমরা সেই অনুযায়ী আপনার health team তৈরি করব — WhatsApp-এ কথা বলার পর।',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
       { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
@@ -547,7 +491,7 @@ const T = {
     val_phone_err: 'অনুগ্রহ করে ১০ সংখ্যার ভারতীয় নম্বর দিন।',
     phone_safety_note: 'আপনার নম্বর নিরাপদ, কারো সাথে share করা হয় না।',
     consent_note: 'এগিয়ে গেলে আপনি JeevanKey-এর Terms of Service-এ সম্মত হচ্ছেন।',
-    btn_connect: 'Health Team-এ যুক্ত হন',
+    btn_connect: 'WhatsApp Us',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'আপনার profile মিলে গেছে। WhatsApp Chat খুলুন।',
     lbl_name: 'নাম',
@@ -561,7 +505,7 @@ const T = {
   ta: {
     brand_tag: 'Onboarding',
     q_paradigm: 'உங்கள் ஆரோக்கியத்திற்கு எந்த approach விரும்புகிறீர்கள்?',
-    h_paradigm: 'அதற்கு ஏற்ப health team அமைப்போம்.',
+    h_paradigm: 'அதற்கு ஏற்ப health team அமைப்போம் — WhatsApp-இல் பேசிய பிறகு.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
       { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
@@ -578,7 +522,7 @@ const T = {
     val_phone_err: '10 இலக்க இந்திய எண்ணை உள்ளிடுங்கள்.',
     phone_safety_note: 'உங்கள் எண் பாதுகாப்பானது, யாருடனும் share செய்யப்படாது.',
     consent_note: 'தொடர்வதன் மூலம் JeevanKey Terms of Service ஐ ஒப்புக்கொள்கிறீர்கள்.',
-    btn_connect: 'Health Team இணை',
+    btn_connect: 'WhatsApp Us',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'உங்கள் profile பொருந்தியது. WhatsApp Chat திறங்கள்.',
     lbl_name: 'பெயர்',
@@ -592,7 +536,7 @@ const T = {
   te: {
     brand_tag: 'Onboarding',
     q_paradigm: 'మీరు ఆరోగ్యం కోసం ఏ approach ఇష్టపడతారు?',
-    h_paradigm: 'దాని ప్రకారం health team నిర్మిస్తాము.',
+    h_paradigm: 'దాని ప్రకారం health team నిర్మిస్తాము — WhatsApp లో మాట్లాడిన తర్వాత.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
       { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
@@ -609,7 +553,7 @@ const T = {
     val_phone_err: '10 అంకెల భారతీయ నంబర్ నమోదు చేయండి.',
     phone_safety_note: 'మీ నంబర్ సురక్షితం, ఎవరితోనూ share చేయబడదు.',
     consent_note: 'కొనసాగించడం ద్వారా మీరు JeevanKey Terms of Service కు అంగీకరిస్తున్నారు.',
-    btn_connect: 'Health Team తో కలుపు',
+    btn_connect: 'WhatsApp Us',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'మీ profile match అయింది. WhatsApp Chat తెరవండి.',
     lbl_name: 'పేరు',
@@ -623,7 +567,7 @@ const T = {
   kn: {
     brand_tag: 'Onboarding',
     q_paradigm: 'ನಿಮ್ಮ ಆರೋಗ್ಯಕ್ಕೆ ಯಾವ approach ಇಷ್ಟ?',
-    h_paradigm: 'ಅದಕ್ಕೆ ತಕ್ಕಂತೆ health team ರಚಿಸುತ್ತೇವೆ.',
+    h_paradigm: 'ಅದಕ್ಕೆ ತಕ್ಕಂತೆ health team ರಚಿಸುತ್ತೇವೆ — WhatsApp ನಲ್ಲಿ ಮಾತನಾಡಿದ ನಂತರ.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
       { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
@@ -640,7 +584,7 @@ const T = {
     val_phone_err: '10 ಅಂಕಿಯ ಭಾರತೀಯ ಸಂಖ್ಯೆ ನಮೂದಿಸಿ.',
     phone_safety_note: 'ನಿಮ್ಮ ಸಂಖ್ಯೆ ಸುರಕ್ಷಿತವಾಗಿದೆ, ಯಾರೊಂದಿಗೂ share ಆಗುವುದಿಲ್ಲ.',
     consent_note: 'ಮುಂದುವರಿಯುವ ಮೂಲಕ ನೀವು JeevanKey Terms of Service ಗೆ ಒಪ್ಪಿಗೆ ನೀಡುತ್ತೀರಿ.',
-    btn_connect: 'Health Team ಜೊತೆ ಸೇರಿಸಿ',
+    btn_connect: 'WhatsApp Us',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'ನಿಮ್ಮ profile match ಆಯಿತು. WhatsApp Chat ತೆರೆಯಿರಿ.',
     lbl_name: 'ಹೆಸರು',
@@ -654,7 +598,7 @@ const T = {
   ml: {
     brand_tag: 'Onboarding',
     q_paradigm: 'ആരോഗ്യത്തിനായി ഏത് approach ഇഷ്ടപ്പെടുന്നു?',
-    h_paradigm: 'അതനുസരിച്ച് health team ഉണ്ടാക്കും.',
+    h_paradigm: 'അതനുസരിച്ച് health team ഉണ്ടാക്കും — WhatsApp-ൽ സംസാരിച്ച ശേഷം.',
     paradigm_opts: [
       { val: 'allopathic', icon: '🏥', main: 'Allopathy', sub: 'English Medicine' },
       { val: 'ayurvedic', icon: '🌿', main: 'Ayurvedic', sub: 'Root-cause treatment' },
@@ -671,7 +615,7 @@ const T = {
     val_phone_err: 'ദയവായി 10 അക്ക ഇന്ത്യൻ നമ്പർ നൽകുക.',
     phone_safety_note: 'നിങ്ങളുടെ നമ്പർ സുരക്ഷിതമാണ്, ആരുമായും share ചെയ്യില്ല.',
     consent_note: 'തുടരുന്നതിലൂടെ JeevanKey Terms of Service അംഗീകരിക്കുന്നു.',
-    btn_connect: 'Health Team-ൽ ചേർക്കൂ',
+    btn_connect: 'WhatsApp Us',
     done_h: (name) => `Team Ready, ${name}!`,
     done_sub: 'നിങ്ങളുടെ profile match ആയി. WhatsApp Chat തുറക്കൂ.',
     lbl_name: 'പേര്',
@@ -730,6 +674,7 @@ function setLang(l) {
 
   document.getElementById('consent-note').textContent = t().consent_note;
   document.getElementById('btn-submit-label').textContent = t().btn_connect;
+  document.getElementById('disclaimer-text').textContent = t().disclaimer;
 
   setTimeout(_broadcastHeight, 60);
 }
@@ -829,56 +774,65 @@ function pickParadigm(el, val) {
 
 /* ══════════════════════════════════════════════════
    COMBINED VALIDATION — all three fields must be valid
+   Also builds the live WhatsApp href and fires
+   jk_onboarding_filled exactly once, the moment the
+   form first becomes fully valid (before any click).
    ══════════════════════════════════════════════════ */
+let _filledFired = false;
+
 function checkAllValid() {
   const nameOk    = D.name.length >= 2;
   const phoneOk   = D.phone.length === 10 && /^[6-9]/.test(D.phone);
   const paradigmOk = !!D.paradigm;
+  const allValid = nameOk && phoneOk && paradigmOk;
   const btn = document.getElementById('btn-submit');
-  if (nameOk && phoneOk && paradigmOk) {
+
+  if (allValid) {
     btn.classList.add('on');
+    _buildWaHref();
+    if (!_filledFired) {
+      _filledFired = true;
+      _gaEvent('jk_onboarding_filled', {
+        paradigm:       D.paradigm,
+        lang:           lang,
+        event_category: 'onboarding_funnel',
+        event_label:    'all_fields_valid'
+      });
+    }
   } else {
     btn.classList.remove('on');
   }
 }
 
-function trySubmit() {
-  const nameOk    = D.name.length >= 2;
-  const phoneOk   = D.phone.length === 10 && /^[6-9]/.test(D.phone);
-  const paradigmOk = !!D.paradigm;
-  if (nameOk && phoneOk && paradigmOk) submit();
+function _buildWaHref() {
+  const msg = encodeURIComponent(t().wa_msg(D.name, D.phone, D.paradigmLabel));
+  document.getElementById('btn-submit').href = 'https://wa.me/919760015878?text=' + msg;
 }
 
 /* ══════════════════════════════════════════════════
-   SUBMIT → DONE SCREEN
+   FINAL CLICK — the single combined action.
+   Opens WhatsApp (native <a> navigation, href already
+   built by _buildWaHref), fires jk_onboarding_complete,
+   and writes to the Google Sheet — all in one motion.
    ══════════════════════════════════════════════════ */
-function submit() {
-  if (!D.paradigm || D.name.length < 2 || !(D.phone.length === 10 && /^[6-9]/.test(D.phone))) return;
+function onFinalClick(e) {
+  const nameOk    = D.name.length >= 2;
+  const phoneOk   = D.phone.length === 10 && /^[6-9]/.test(D.phone);
+  const paradigmOk = !!D.paradigm;
+  if (!(nameOk && phoneOk && paradigmOk)) { e.preventDefault(); return; }
 
-  // Populate done screen
-  document.getElementById('done-h').textContent = t().done_h(D.name);
-  document.getElementById('done-sub').textContent = t().done_sub;
-  document.getElementById('lbl-name').textContent = t().lbl_name;
-  document.getElementById('lbl-wa').textContent = t().lbl_wa;
-  document.getElementById('lbl-track').textContent = t().lbl_track;
-  document.getElementById('s-name').textContent = D.name;
-  document.getElementById('s-phone').textContent = '+91 ' + D.phone;
-  document.getElementById('s-paradigm').textContent = D.paradigmLabel;
-  document.getElementById('wa-btn-label').textContent = t().wa_btn;
-  document.getElementById('disclaimer-text').textContent = t().disclaimer;
+  const urlParams = new URLSearchParams(window.location.search);
+  _gaEvent('jk_onboarding_complete', {
+    paradigm:       D.paradigm,
+    paradigm_label: D.paradigmLabel,
+    lang:           lang,
+    intent:         urlParams.get('intent') || D.paradigm,
+    event_category: 'conversion',
+    event_label:    'whatsapp_click'
+  });
 
-  // Build pre-filled WhatsApp message
-  const msg = encodeURIComponent(t().wa_msg(D.name, D.phone, D.paradigmLabel));
-  document.getElementById('done-wa-btn').href = 'https://wa.me/919760015878?text=' + msg;
-
-  // Transition
-  document.getElementById('step-form').classList.remove('active');
-  document.getElementById('step-done').classList.add('active');
-
-  setTimeout(_broadcastHeight, 60);
-
-  // Google Sheets relay + GA4 lead event
   sendToSheet();
+  // No preventDefault — the anchor's href (already built) opens WhatsApp natively.
 }
 
 /* ══════════════════════════════════════════════════
@@ -898,6 +852,9 @@ function _gaEvent(eventName, params) {
 
 /* ══════════════════════════════════════════════════
    GOOGLE SHEETS RELAY
+   Pure background write — event firing happens in
+   onFinalClick, not here, since navigation to WhatsApp
+   should never wait on this network call.
    ══════════════════════════════════════════════════ */
 function sendToSheet() {
   const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzy6446YnufjDvKZ4KE77nMGEa34CKWWrHMyK8GvYS035VLzHqiiJqjUMygmEVUQuo/exec';
@@ -915,43 +872,7 @@ function sendToSheet() {
     mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
-  })
-  .then(() => {
-    _gaEvent('jk_onboarding_complete', {
-      paradigm:       D.paradigm,
-      paradigm_label: D.paradigmLabel,
-      lang:           lang,
-      intent:         intentVal,
-      event_category: 'onboarding_funnel',
-      event_label:    'sheet_write_success'
-    });
-  })
-  .catch(() => {
-    _gaEvent('jk_onboarding_complete', {
-      paradigm:       D.paradigm,
-      paradigm_label: D.paradigmLabel,
-      lang:           lang,
-      intent:         intentVal,
-      event_category: 'onboarding_funnel',
-      event_label:    'sheet_write_failed'
-    });
-  });
-}
-
-/* ══════════════════════════════════════════════════
-   WHATSAPP CLICK — PRIMARY CONVERSION EVENT
-   Mark jk_onboarding_whatsapp_initiated as a
-   Conversion in GA4 and primary Google Ads conversion.
-   ══════════════════════════════════════════════════ */
-function onWaClick() {
-  _gaEvent('jk_onboarding_whatsapp_initiated', {
-    paradigm:       D.paradigm,
-    paradigm_label: D.paradigmLabel,
-    lang:           lang,
-    intent:         new URLSearchParams(window.location.search).get('intent') || D.paradigm,
-    event_category: 'conversion',
-    event_label:    'onboarding_whatsapp_cta'
-  });
+  }).catch(() => {});
 }
 
 /* ══════════════════════════════════════════════════
