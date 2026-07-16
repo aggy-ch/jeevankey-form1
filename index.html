@@ -309,17 +309,6 @@ body {
     <p class="paradigm-note" id="paradigm-note"></p>
 
     <div class="field-group">
-      <div class="field-label" id="lbl-name-field"></div>
-      <div class="field-wrap">
-        <input class="field-input" type="text" id="f-name"
-          autocomplete="given-name" autocapitalize="words" maxlength="40"
-          oninput="onName(this)"
-          onkeydown="if(event.key==='Enter'){ document.getElementById('f-phone').focus(); }">
-        <div class="val-msg" id="val-name"></div>
-      </div>
-    </div>
-
-    <div class="field-group">
       <div class="field-label" id="lbl-phone-field"></div>
       <div class="field-wrap">
         <div class="phone-wrap">
@@ -354,7 +343,7 @@ body {
 /* ══════════════════════════════════════════════════
    DATA STORE
    ══════════════════════════════════════════════════ */
-const D = { name: '', phone: '', paradigm: '', paradigmLabel: '', intent: '' };
+const D = { phone: '', paradigm: '', paradigmLabel: '', intent: '' };
 const _stepFired = { name: false, phone: false, paradigm: false };
 let lang = 'hi';
 
@@ -390,8 +379,12 @@ const T = {
     lbl_track: 'Care Track',
     wa_btn: 'WhatsApp Chat खोलें →',
     disclaimer: 'JeevanKey एक health coordination service है। Medical emergency में तुरंत 112 पर call करें।',
-    wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, maine onboarding complete ki. Main Terms of Service se sahmat hoon.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nKripya mujhe mere dedicated health manager aur health team se milayein.`,
+    wa_msg: (phone, track) =>
+      `Hello JeevanKey, maine onboarding complete ki. Main Terms of Service se sahmat hoon.
+
+WhatsApp: +91 ${phone}
+Care Track: ${track}
+Kripya mujhe mere dedicated health manager aur health team se milayein.`,
   },
   en: {
     brand_tag: 'Onboarding',
@@ -421,8 +414,12 @@ const T = {
     lbl_track: 'Care Track',
     wa_btn: 'Open WhatsApp Chat →',
     disclaimer: 'JeevanKey is a health coordination service. For medical emergencies, call 112 immediately.',
-    wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, I completed my onboarding. I accept the terms of service.\n\nName: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nPlease match me with my dedicated health manager and health team.`,
+    wa_msg: (phone, track) =>
+      `Hello JeevanKey, I completed my onboarding. I accept the terms of service.
+
+WhatsApp: +91 ${phone}
+Care Track: ${track}
+Please match me with my dedicated health manager and health team.`,
   },
   gu: {
     brand_tag: 'Onboarding',
@@ -452,8 +449,12 @@ const T = {
     lbl_track: 'Care Track',
     wa_btn: 'WhatsApp Chat ખોલો →',
     disclaimer: 'JeevanKey health coordination service છે. Emergency માટે 112 પર call કરો.',
-    wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, maine onboarding complete ki. Terms of Service manzoor hai.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nMujhe health manager aur health team se milayein.`,
+    wa_msg: (phone, track) =>
+      `Hello JeevanKey, maine onboarding complete ki. Terms of Service manzoor hai.
+
+WhatsApp: +91 ${phone}
+Care Track: ${track}
+Mujhe health manager aur health team se milayein.`,
   },
   mr: {
     brand_tag: 'Onboarding',
@@ -483,8 +484,12 @@ const T = {
     lbl_track: 'Care Track',
     wa_btn: 'WhatsApp Chat उघडा →',
     disclaimer: 'JeevanKey एक health coordination service आहे. Emergency साठी 112 वर call करा.',
-    wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, maine onboarding complete ki. Terms of Service manzoor hai.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nMujhe health manager aur health team se milayein.`,
+    wa_msg: (phone, track) =>
+      `Hello JeevanKey, maine onboarding complete ki. Terms of Service manzoor hai.
+
+WhatsApp: +91 ${phone}
+Care Track: ${track}
+Mujhe health manager aur health team se milayein.`,
   },
   bn: {
     brand_tag: 'Onboarding',
@@ -514,8 +519,12 @@ const T = {
     lbl_track: 'Care Track',
     wa_btn: 'WhatsApp Chat খুলুন →',
     disclaimer: 'JeevanKey একটি health coordination service। জরুরি অবস্থায় 112-তে call করুন।',
-    wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, onboarding complete korlam. Terms of Service mene niyechi.\n\nNaam: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nDaya kore health manager o health team er sathe jog korun.`,
+    wa_msg: (phone, track) =>
+      `Hello JeevanKey, onboarding complete korlam. Terms of Service mene niyechi.
+
+WhatsApp: +91 ${phone}
+Care Track: ${track}
+Daya kore health manager o health team er sathe jog korun.`,
   },
   ta: {
     brand_tag: 'Onboarding',
@@ -545,8 +554,12 @@ const T = {
     lbl_track: 'Care Track',
     wa_btn: 'WhatsApp Chat திறக்க →',
     disclaimer: 'JeevanKey ஒரு health coordination சேவை. அவசரநிலையில் 112 அழைக்கவும்.',
-    wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, onboarding complete aaichu. Terms of Service accept panren.\n\nPeyar: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nEn health manager um health team um kitta connect pannunga.`,
+    wa_msg: (phone, track) =>
+      `Hello JeevanKey, onboarding complete aaichu. Terms of Service accept panren.
+
+WhatsApp: +91 ${phone}
+Care Track: ${track}
+En health manager um health team um kitta connect pannunga.`,
   },
   te: {
     brand_tag: 'Onboarding',
@@ -576,8 +589,12 @@ const T = {
     lbl_track: 'Care Track',
     wa_btn: 'WhatsApp Chat తెరవండి →',
     disclaimer: 'JeevanKey ఒక health coordination service. అత్యవసర పరిస్థితిలో 112 కి call చేయండి.',
-    wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, onboarding complete chesanu. Terms of Service accept chesanu.\n\nPeru: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nNanu health manager mattu health team tho connect cheyyandi.`,
+    wa_msg: (phone, track) =>
+      `Hello JeevanKey, onboarding complete chesanu. Terms of Service accept chesanu.
+
+WhatsApp: +91 ${phone}
+Care Track: ${track}
+Nanu health manager mattu health team tho connect cheyyandi.`,
   },
   kn: {
     brand_tag: 'Onboarding',
@@ -607,8 +624,12 @@ const T = {
     lbl_track: 'Care Track',
     wa_btn: 'WhatsApp Chat ತೆರೆಯಿರಿ →',
     disclaimer: 'JeevanKey ಒಂದು health coordination service. ತುರ್ತುಸ್ಥಿತಿಯಲ್ಲಿ 112 ಗೆ call ಮಾಡಿ.',
-    wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, onboarding complete maadide. Terms of Service accept maadide.\n\nHesaru: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nNannu health manager mattu health team jote connect maadi.`,
+    wa_msg: (phone, track) =>
+      `Hello JeevanKey, onboarding complete maadide. Terms of Service accept maadide.
+
+WhatsApp: +91 ${phone}
+Care Track: ${track}
+Nannu health manager mattu health team jote connect maadi.`,
   },
   ml: {
     brand_tag: 'Onboarding',
@@ -638,8 +659,12 @@ const T = {
     lbl_track: 'Care Track',
     wa_btn: 'WhatsApp Chat തുറക്കൂ →',
     disclaimer: 'JeevanKey ഒരു health coordination service ആണ്. അടിയന്തര സ്ഥിതിക്ക് 112 വിളിക്കുക.',
-    wa_msg: (name, phone, track) =>
-      `Hello JeevanKey, onboarding complete cheshu. Terms of Service accept cheshu.\n\nPer: ${name}\nWhatsApp: +91 ${phone}\nCare Track: ${track}\nEne health manager um health team umayi connect cheyyuka.`,
+    wa_msg: (phone, track) =>
+      `Hello JeevanKey, onboarding complete cheshu. Terms of Service accept cheshu.
+
+WhatsApp: +91 ${phone}
+Care Track: ${track}
+Ene health manager um health team umayi connect cheyyuka.`,
   },
 };
 
@@ -680,9 +705,6 @@ function setLang(l) {
   renderParadigmOpts();
   document.getElementById('paradigm-note').textContent = t().change_note;
 
-  document.getElementById('lbl-name-field').textContent = t().lbl_name_field;
-  document.getElementById('f-name').placeholder = t().placeholder_name;
-
   document.getElementById('lbl-phone-field').textContent = t().lbl_phone_field;
   document.getElementById('f-phone').placeholder = t().placeholder_phone;
   document.getElementById('phone-safety-note').textContent = t().phone_safety_note;
@@ -692,32 +714,6 @@ function setLang(l) {
   document.getElementById('disclaimer-text').textContent = t().disclaimer;
 
   setTimeout(_broadcastHeight, 60);
-}
-
-/* ══════════════════════════════════════════════════
-   FIELD VALIDATION — NAME
-   ══════════════════════════════════════════════════ */
-function onName(el) {
-  const v = el.value.trim();
-  D.name = v;
-  const msg = document.getElementById('val-name');
-  if (v.length >= 2) {
-    el.classList.add('valid');
-    msg.textContent = t().val_name_ok;
-    msg.className = 'val-msg show';
-    if (!_stepFired.name) {
-      _stepFired.name = true;
-      _gaEvent('jk_onboarding_step', {
-        step: 'name_entered',
-        event_category: 'onboarding_funnel',
-        event_label: 'step_name'
-      });
-    }
-  } else {
-    el.classList.remove('valid');
-    msg.className = 'val-msg';
-  }
-  checkAllValid();
 }
 
 /* ══════════════════════════════════════════════════
@@ -796,10 +792,9 @@ function pickParadigm(el, val) {
 let _filledFired = false;
 
 function checkAllValid() {
-  const nameOk    = D.name.length >= 2;
   const phoneOk   = D.phone.length === 10 && /^[6-9]/.test(D.phone);
   const paradigmOk = !!D.paradigm;
-  const allValid = nameOk && phoneOk && paradigmOk;
+  const allValid = phoneOk && paradigmOk;
   const btn = document.getElementById('btn-submit');
 
   if (allValid) {
@@ -820,7 +815,7 @@ function checkAllValid() {
 }
 
 function _buildWaHref() {
-  const msg = encodeURIComponent(t().wa_msg(D.name, D.phone, D.paradigmLabel));
+  const msg = encodeURIComponent(t().wa_msg(D.phone, D.paradigmLabel));
   document.getElementById('btn-submit').href = 'https://wa.me/919760015878?text=' + msg;
 }
 
@@ -835,17 +830,6 @@ function _guideToMissingField() {
     const el = document.getElementById('paradigm-opts');
     el.classList.add('attn-flash');
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    setTimeout(() => el.classList.remove('attn-flash'), 500);
-    return;
-  }
-  if (D.name.length < 2) {
-    const el = document.getElementById('f-name');
-    const msg = document.getElementById('val-name');
-    el.classList.add('attn-flash');
-    el.focus();
-    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    msg.textContent = t().val_name_err;
-    msg.className = 'val-msg show err';
     setTimeout(() => el.classList.remove('attn-flash'), 500);
     return;
   }
@@ -870,10 +854,9 @@ function _guideToMissingField() {
    instead of silently doing nothing.
    ══════════════════════════════════════════════════ */
 function onFinalClick(e) {
-  const nameOk    = D.name.length >= 2;
   const phoneOk   = D.phone.length === 10 && /^[6-9]/.test(D.phone);
   const paradigmOk = !!D.paradigm;
-  if (!(nameOk && phoneOk && paradigmOk)) {
+  if (!(phoneOk && paradigmOk)) {
     e.preventDefault();
     _guideToMissingField();
     return;
@@ -919,7 +902,6 @@ function sendToSheet() {
   const urlParams = new URLSearchParams(window.location.search);
   const intentVal = urlParams.get('intent') || D.paradigm;
   const payload = {
-    name:    D.name,
     phone:   "'+91 " + D.phone,
     concern: D.paradigmLabel,
     intent:  intentVal,
